@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="AccentColor" Color="#79B6FF" />
+    <SolidColorBrush x:Key="AccentColorLight" Color="#9CC1FF" />
+    <SolidColorBrush x:Key="AccentColorDark" Color="#5AA0FF" />
+    <SolidColorBrush x:Key="AccentFeColor" Color="#000000" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="./Styles/Window.xaml" />
+        <ResourceDictionary Source="./Styles/ScrollViewer.xaml" />
+        <ResourceDictionary Source="./Styles/ScrollBar.xaml" />
+        <ResourceDictionary Source="./Styles/CheckBox.xaml" />
+        <ResourceDictionary Source="./Styles/Button.xaml" />
+        <ResourceDictionary Source="./Styles/TextBox.xaml" />
+        <ResourceDictionary Source="./Styles/ComboBox.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
