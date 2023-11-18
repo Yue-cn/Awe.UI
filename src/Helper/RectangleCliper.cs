@@ -12,12 +12,6 @@ namespace Awe.UI.Helper
 {
     public static class RectangleCliper
     {
-
-
-
-        
-        
-
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(RectangleCliper), new PropertyMetadata(new CornerRadius(0),OnCornerRadiusChanged));

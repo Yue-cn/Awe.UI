@@ -7,17 +7,62 @@ using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace Awe.UI.Helper
 {
-    internal class WindowsHelper
+    public class WindowsHelper
     {
 
+        public static readonly DependencyProperty VisibilityToFocusProperty =
+            DependencyProperty.RegisterAttached("VisibilityToFocus", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnVisibilityToFocusChanged));
+
+        public static bool GetVisibilityToFocus(DependencyObject obj)
+            => (bool)obj.GetValue(VisibilityToFocusProperty);
+
+        public static void SetVisibilityToFocus(DependencyObject obj, bool value)
+            => obj.SetValue(VisibilityToFocusProperty, value);
+
+        private static void OnVisibilityToFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ContentPresenter fe)
+            {
+                IInputElement? bfFocused = null;
+                fe.IsVisibleChanged += async delegate
+                    {
+                    if (fe.Visibility is Visibility.Visible)
+                    {
+                        bfFocused = Keyboard.FocusedElement;
+                         
+                        Keyboard.ClearFocus();
+
+                        if (fe.Content is FrameworkElement e)
+                        {
+                            var ve = FocusManager.GetFocusedElement(e);
+
+                            while (Keyboard.FocusedElement == null)
+                            {
+                                await Task.Delay(15);
+
+                                Keyboard.Focus(ve);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //
+
+                        if (bfFocused is not null)
+                            Keyboard.Focus(bfFocused);
+                    }
+                };
+            }
+        }
 
 
-        
+
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaximumSnapProperty =
@@ -31,7 +76,6 @@ namespace Awe.UI.Helper
 
         private static async void OnMaximumSnapChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            // attach button
             if (d is Button btn)
             {
                 if (Environment.OSVersion.Version >= new Version(10, 0, 21996) &&
@@ -47,6 +91,7 @@ namespace Awe.UI.Helper
 
                         await Task.Delay(1500);
 
+                        if (hwnd is null) return;
 #if NET462_OR_NEWER
                         _dpiScale = VisualTreeHelper.GetDpi(button).DpiScaleX;
 #else
@@ -63,6 +108,7 @@ namespace Awe.UI.Helper
             }
         }
 
+        #region Maximun Fix
         private static SolidColorBrush DefaultButtonBackground = new SolidColorBrush
         {
             Color = Colors.Transparent
@@ -256,6 +302,34 @@ namespace Awe.UI.Helper
             //_hoverColor = (SolidColorBrush)Application.Current.Resources["SystemControlHighlightListLowBrush"] ?? new SolidColorBrush(Color.FromArgb(21, 255, 255, 255));
         }
 
+        #endregion
+
+
+
+
+
+        public static readonly DependencyProperty DialogContentProperty =
+    DependencyProperty.RegisterAttached("DialogContent", typeof(FrameworkElement), typeof(WindowsHelper), new PropertyMetadata(null,OnDialogContentChanged));
+
+        public static FrameworkElement GetDialogContent(DependencyObject obj)
+            => (FrameworkElement)obj.GetValue(DialogContentProperty);
+
+        public static void SetDialogContent(DependencyObject obj, FrameworkElement value)
+            => obj.SetValue(DialogContentProperty, value);
+
+        public static readonly DependencyProperty DialogOpennedSnapProperty =
+            DependencyProperty.RegisterAttached("DialogOpenned", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false));
+
+        public static bool GetDialogOpenned(DependencyObject obj)
+            => (bool)obj.GetValue(DialogOpennedSnapProperty);
+
+        public static void SetDialogOpenned(DependencyObject obj, bool value)
+            => obj.SetValue(DialogOpennedSnapProperty, value);
+
+        private static void OnDialogContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is null) { SetDialogOpenned(d, false); }
+        }
 
     }
 }

@@ -7,15 +7,15 @@
                         <Setter.Value>
                             <ControlTemplate>
                                 <Border
-                                    Margin="-8,-8,-12,-8"
-                                    BorderBrush="White"
+                                    Margin="-8"
+                                    BorderBrush="Black"
                                     BorderThickness="2"
-                                    CornerRadius="0"
+                                    CornerRadius="3"
                                     SnapsToDevicePixels="True">
                                     <Border
-                                        BorderBrush="Black"
+                                        BorderBrush="White"
                                         BorderThickness="2"
-                                        CornerRadius="0" />
+                                        CornerRadius="3" />
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
@@ -25,66 +25,151 @@
         </Setter>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <Grid HorizontalAlignment="Left" Background="Transparent">
+                    <Grid Margin="{TemplateBinding Padding}" ToolTip="{TemplateBinding Content}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border
-                            x:Name="glyph"
                             Grid.Column="0"
                             Width="20"
                             Height="20"
-                            BorderBrush="#79B6FF">
-                            <Path
-                                x:Name="cv"
-                                Width="10"
-                                Height="10"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="F1 M 2.5 10.625 C 2.5 10.455729 2.561849 10.309245 2.685547 10.185547 C 2.809245 10.06185 2.955729 10 3.125 10 C 3.294271 10 3.440755 10.06185 3.564453 10.185547 L 7.5 14.111328 L 16.435547 5.185547 C 16.559244 5.06185 16.705729 5.000001 16.875 5 C 17.04427 5.000001 17.190754 5.06185 17.314453 5.185547 C 17.43815 5.309245 17.5 5.455729 17.5 5.625 C 17.5 5.794271 17.43815 5.940756 17.314453 6.064453 L 7.939453 15.439453 C 7.815755 15.563151 7.669271 15.625 7.5 15.625 C 7.330729 15.625 7.184245 15.563151 7.060547 15.439453 L 2.685547 11.064453 C 2.561849 10.940756 2.5 10.794271 2.5 10.625 Z "
-                                Stretch="Uniform" />
+                            Margin="0,0,6,0"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Border.BorderBrush>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+                                            <Grid Background="{DynamicResource Awe.UI.DefaultBorderBrush}" />
+                                            <Grid
+                                                x:Name="hoverBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorHover}"
+                                                Opacity="0" />
+                                            <Grid
+                                                x:Name="pressedBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorPressed}"
+                                                Opacity="0" />
+                                        </Grid>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+                            <!--  Glyph  -->
+                            <Grid x:Name="glyph" Opacity="0" Margin="-1">
+                                <Border
+                                    x:Name="glyph__bg"
+                                    Background="{DynamicResource Awe.UI.AccentColor}"
+                                    CornerRadius="3.5"
+                                    Opacity="1" />
+                                <Path
+                                    Width="12"
+                                    Height="12"
+                                    Data="{DynamicResource ResourceKey=Awe.UI.Icons.Check}"
+                                    Fill="Black"
+                                    Stretch="Uniform" />
+                            </Grid>
                         </Border>
-                        <Grid Grid.Column="1" Margin="6,1,0,0">
+                        <Grid Grid.Column="1">
                             <TextBlock
                                 VerticalAlignment="Center"
-                                FontSize="12"
-                                Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                                Text="{TemplateBinding Content}"
+                                TextTrimming="WordEllipsis" />
                         </Grid>
+
                     </Grid>
+                    <ControlTemplate.Resources>
+                        <CubicEase x:Key="ButtonTranstion" EasingMode="EaseOut" />
+                    </ControlTemplate.Resources>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="glyph" Property="BorderThickness" Value="1" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value="" />-->
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsStylusOver" Value="False" />
-                                <Condition Property="IsPressed" Value="False" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="glyph" Property="Background" Value="#2fffffff" />
-                        </MultiTrigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6" />
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value=" />-->
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="glyph" Property="Background" Value="{DynamicResource AccentColorLight}" />
-                            <Setter TargetName="cv" Property="Fill" Value="{DynamicResource AccentFeColor}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="glyph"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="glyph"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsStylusOver" Value="False" />
-                                <Condition Property="IsPressed" Value="False" />
-                                <Condition Property="IsChecked" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="glyph" Property="Background" Value="#AACBFF" />
-                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="glyph__bg" Property="Background" Value="{DynamicResource Awe.UI.AccentColorDisabled}" />
+                            <Setter Property="Opacity" Value="0.6" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

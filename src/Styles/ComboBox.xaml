@@ -12,7 +12,7 @@
                         MinHeight="20"
                         Padding="0,8,8,8"
                         Background="Transparent"
-                        BorderBrush="#1fffffff"
+                        BorderBrush="{DynamicResource Awe.UI.DefaultBorderBrush}"
                         BorderThickness="1">
                         <Grid>
                             <!--  Arrow  -->
@@ -31,7 +31,7 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Data="F1 M 2.5 6.875 C 2.5 6.705729 2.561849 6.559245 2.685547 6.435547 C 2.809245 6.31185 2.955729 6.25 3.125 6.25 C 3.294271 6.25 3.440755 6.31185 3.564453 6.435547 L 10 12.861328 L 16.435547 6.435547 C 16.559244 6.31185 16.705729 6.25 16.875 6.25 C 17.04427 6.25 17.190754 6.31185 17.314453 6.435547 C 17.43815 6.559245 17.5 6.705729 17.5 6.875 C 17.5 7.044271 17.43815 7.190756 17.314453 7.314453 L 10.439453 14.189453 C 10.315755 14.313151 10.169271 14.375 10 14.375 C 9.830729 14.375 9.684244 14.313151 9.560547 14.189453 L 2.685547 7.314453 C 2.561849 7.190756 2.5 7.044271 2.5 6.875 Z "
-                                    Fill="#1fffffff"
+                                    Fill="{DynamicResource Awe.UI.DefaultBorderBrush}"
                                     Stretch="Uniform" />
                             </Grid>
                         </Grid>
@@ -78,25 +78,51 @@
 
     <Style TargetType="ComboBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Border
+                                    Margin="-4"
+                                    BorderBrush="White"
+                                    BorderThickness="2"
+                                    CornerRadius="3"
+                                    SnapsToDevicePixels="True">
+                                    <Border
+                                        BorderBrush="Black"
+                                        BorderThickness="2"
+                                        CornerRadius="3" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
                     <Grid>
                         <Popup
                             ui:PopupHelper.FixPopup="True"
-                            AllowsTransparency="False"
+                            AllowsTransparency="True"
                             IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
                             Placement="Bottom"
+                            PopupAnimation="Fade"
                             StaysOpen="True">
                             <Border
                                 Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
-                                Height="100"
-                                BorderBrush="#2fffffff">
-                                <ItemsPresenter />
+                                Background="#222222"
+                                BorderBrush="{DynamicResource Awe.UI.DefaultBorderBrush}">
+                                <ItemsPresenter Margin="0,0,0,-4" />
                             </Border>
                         </Popup>
-                        <ToggleButton IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}" Style="{StaticResource ComboBoxContainer}" />
+                        <ToggleButton
+                            Focusable="False"
+                            IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                            Style="{StaticResource ComboBoxContainer}" />
                         <ContentPresenter
                             Margin="10,0,0,0"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

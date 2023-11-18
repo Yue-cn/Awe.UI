@@ -1,17 +1,33 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <SolidColorBrush x:Key="AccentColor" Color="#79B6FF" />
-    <SolidColorBrush x:Key="AccentColorLight" Color="#9CC1FF" />
-    <SolidColorBrush x:Key="AccentColorDark" Color="#5AA0FF" />
-    <SolidColorBrush x:Key="AccentFeColor" Color="#000000" />
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+
+    <SolidColorBrush x:Key="Awe.UI.AccentColor" Color="#72A0C9" />
+    <SolidColorBrush x:Key="Awe.UI.AccentColorHover" Color="#529BDB" />
+    <SolidColorBrush x:Key="Awe.UI.AccentColorPressed" Color="#0F6FB8" />
+    <SolidColorBrush x:Key="Awe.UI.AccentColorDisabled" Color="#529BDB" />
+    <SolidColorBrush x:Key="Awe.UI.DefaultBorderBrush" Color="#14FFFFFF" />
+    <FontFamily x:Key="Awe.UI.DisplayFont">Microsoft Yahei</FontFamily>
+    <PopupAnimation x:Key="{x:Static SystemParameters.MenuPopupAnimationKey}">Fade</PopupAnimation>
+    <Geometry x:Key="Awe.UI.Icons.Check">F1 M 2.5 10.625 C 2.5 10.455729 2.561849 10.309245 2.685547 10.185547 C 2.809245 10.06185 2.955729 10 3.125 10 C 3.294271 10 3.440755 10.06185 3.564453 10.185547 L 7.5 14.111328 L 16.435547 5.185547 C 16.559244 5.06185 16.705729 5.000001 16.875 5 C 17.04427 5.000001 17.190754 5.06185 17.314453 5.185547 C 17.43815 5.309245 17.5 5.455729 17.5 5.625 C 17.5 5.794271 17.43815 5.940756 17.314453 6.064453 L 7.939453 15.439453 C 7.815755 15.563151 7.669271 15.625 7.5 15.625 C 7.330729 15.625 7.184245 15.563151 7.060547 15.439453 L 2.685547 11.064453 C 2.561849 10.940756 2.5 10.794271 2.5 10.625 Z</Geometry>
+
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="./Styles/Icons.xaml" />
+
         <ResourceDictionary Source="./Styles/Window.xaml" />
+        <ResourceDictionary Source="./Styles/TextBox.xaml" />
         <ResourceDictionary Source="./Styles/ScrollViewer.xaml" />
         <ResourceDictionary Source="./Styles/ScrollBar.xaml" />
         <ResourceDictionary Source="./Styles/CheckBox.xaml" />
         <ResourceDictionary Source="./Styles/Button.xaml" />
-        <ResourceDictionary Source="./Styles/TextBox.xaml" />
+
         <ResourceDictionary Source="./Styles/ComboBox.xaml" />
-
+        <ResourceDictionary Source="./Styles/ComboBoxItem.xaml" />
+        <ResourceDictionary Source="./Styles/Menu.xaml" />
+        <ResourceDictionary Source="./Styles/MenuItem.xaml" />
+        <ResourceDictionary Source="./Styles/ContextMenu.xaml" />
+        <ResourceDictionary Source="./Styles/PasswordBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

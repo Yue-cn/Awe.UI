@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Awe.UI.Helper">
     <Style x:Key="DefaultButtonStyle" TargetType="Button">
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
@@ -7,15 +10,15 @@
                         <Setter.Value>
                             <ControlTemplate>
                                 <Border
-                                    Margin="-4"
+                                    Margin="-2"
                                     BorderBrush="White"
                                     BorderThickness="2"
-                                    CornerRadius="0"
+                                    CornerRadius="3"
                                     SnapsToDevicePixels="True">
                                     <Border
                                         BorderBrush="Black"
                                         BorderThickness="2"
-                                        CornerRadius="0" />
+                                        CornerRadius="3" />
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
@@ -25,114 +28,528 @@
         </Setter>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Background" Value="#08FFFFFF" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border
-                        x:Name="border"
-                        Padding="24,8"
-                        BorderBrush="#3fffffff"
-                        BorderThickness="1">
-                        <TextBlock
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontWeight="{TemplateBinding FontWeight}"
-                            Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#00ffffff" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsStylusOver" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="Background" Value="#1fffffff" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsPressed" Value="True" />
-                                <Condition Property="AreAnyTouchesOver" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="Background" Value="#3fffffff" />
-                        </MultiTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="AccentButtonStyle" TargetType="Button">
-        <Setter Property="FocusVisualStyle">
-            <Setter.Value>
-                <Style>
-                    <Setter Property="Control.Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <Border
-                                    Margin="-4"
-                                    BorderBrush="White"
-                                    BorderThickness="2"
-                                    CornerRadius="0"
-                                    SnapsToDevicePixels="True">
-                                    <Border
-                                        BorderBrush="Black"
-                                        BorderThickness="2"
-                                        CornerRadius="0" />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border
-                        x:Name="border"
-                        Padding="25,9"
-                        BorderBrush="#3fffffff">
-                        <TextBlock
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontWeight="{TemplateBinding FontWeight}"
-                            Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6" />
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentColorLight}" />
-                            <Setter TargetName="border" Property="TextElement.Foreground" Value="{DynamicResource AccentFeColor}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentColor}" />
-                            <Setter TargetName="border" Property="TextElement.Foreground" Value="{DynamicResource AccentFeColor}" />
+                    <Grid>
 
+                        <Border
+                            x:Name="border"
+                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            ToolTip="{TemplateBinding Content}">
+                            <Border.Background>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+                                            <Border Background="{TemplateBinding Background}" />
+                                            <Border
+                                                x:Name="nrBorder"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="3" />
+                                            <Border
+                                                x:Name="hoverBorder"
+                                                Background="#10ffffff"
+                                                CornerRadius="3"
+                                                Opacity="0" />
+                                            <Border
+                                                x:Name="pressedBorder"
+                                                Background="#00ffffff"
+                                                CornerRadius="3"
+                                                Opacity="0" />
+                                        </Grid>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.Background>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Content="{Binding (ui:ControlHelper.Icon), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="1"
+                                    Text="{TemplateBinding Content}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <CubicEase x:Key="ButtonTranstion" EasingMode="EaseOut" />
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="nrBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="nrBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value="" />-->
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsStylusOver" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentColorLight}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsPressed" Value="True" />
-                                <Condition Property="AreAnyTouchesOver" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentColorDark}" />
-                        </MultiTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="nrBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="nrBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value=" />-->
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.6"
+                                            Duration="0:0:.25" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    <Style
+        x:Key="AccentButtonStyle"
+        BasedOn="{StaticResource DefaultButtonStyle}"
+        TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource Awe.UI.AccentColor}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+
+                        <Border
+                            x:Name="border"
+                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            ToolTip="{TemplateBinding Content}">
+                            <Border.Background>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+                                            <Border
+                                                x:Name="nrBorder"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="3" />
+                                            <Border
+                                                x:Name="hoverBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorHover}"
+                                                CornerRadius="3"
+                                                Opacity="0" />
+                                            <Border
+                                                x:Name="pressedBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorPressed}"
+                                                CornerRadius="3"
+                                                Opacity="0" />
+                                            <Border
+                                                x:Name="disabledBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorDisabled}"
+                                                CornerRadius="3"
+                                                Opacity="0" />
+                                        </Grid>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.Background>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Content="{Binding (ui:ControlHelper.Icon), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="1"
+                                    Text="{TemplateBinding Content}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <CubicEase x:Key="ButtonTranstion" EasingMode="EaseOut" />
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value="" />-->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value=" />-->
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.6"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="nrBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="disabledBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="nrBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="disabledBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="AccentOutlineButtonStyle"
+        BasedOn="{StaticResource DefaultButtonStyle}"
+        TargetType="Button">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Awe.UI.DefaultBorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+
+                        <Border
+                            x:Name="border"
+                            Padding="{TemplateBinding Padding}"
+                            Background="Transparent"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            ToolTip="{TemplateBinding Content}">
+                            <Border.BorderBrush>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+                                            <Grid Background="{TemplateBinding BorderBrush}" />
+                                            <Grid
+                                                x:Name="hoverBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorHover}"
+                                                Opacity="0" />
+                                            <Grid
+                                                x:Name="pressedBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorPressed}"
+                                                Opacity="0" />
+                                        </Grid>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Content="{Binding (ui:ControlHelper.Icon), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{TemplateBinding Content}"
+                                    TextTrimming="CharacterEllipsis">
+                                    <TextBlock.Foreground>
+
+                                        <VisualBrush Stretch="Fill">
+                                            <VisualBrush.Visual>
+                                                <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+                                                    <Border Background="White" />
+                                                    <Border
+                                                        x:Name="feDrawHover"
+                                                        Background="{DynamicResource Awe.UI.AccentColorHover}"
+                                                        Opacity="0" />
+                                                    <Border
+                                                        x:Name="feDrawPressed"
+                                                        Background="{DynamicResource Awe.UI.AccentColorPressed}"
+                                                        Opacity="0" />
+                                                </Grid>
+                                            </VisualBrush.Visual>
+
+                                        </VisualBrush>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <CubicEase x:Key="ButtonTranstion" EasingMode="EaseOut" />
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="feDrawHover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="hoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="feDrawHover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value="" />-->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="feDrawPressed"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="pressedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetName="feDrawPressed"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<Setter TargetName="border" Property="Background" Value=" />-->
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.6"
+                                            Duration="0:0:.25" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource ButtonTranstion}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button" />
 </ResourceDictionary>
