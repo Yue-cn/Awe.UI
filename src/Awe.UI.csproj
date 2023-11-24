@@ -7,9 +7,4 @@
     <Nullable>enable</Nullable>
 	<UseWPF>true</UseWPF>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationFramework.Aero2" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,113 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Awe.UI.Converter"
+    xmlns:local="clr-namespace:Awe.UI.Controls">
+    <Style TargetType="local:VisibilityTranstion">
+        <Setter Property="IsDisplay" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:VisibilityTranstion">
+                    <Border
+                        x:Name="layout"
+                        Padding="0"
+                        Background="{TemplateBinding Background}"
+                        RenderTransformOrigin=".5,.5"
+                        UseLayoutRounding="True">
+                        <Border.Resources>
+                            <converter:RollbackConverter x:Key="RollbackConverter" />
+                            <CubicEase x:Key="EasingFunc" />
+                        </Border.Resources>
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform x:Name="pl" X="0" Y="0" />
+                                <ScaleTransform x:Name="sc" ScaleX="1" ScaleY="1" />
+                            </TransformGroup>
+                        </Border.RenderTransform>
+
+
+                        <ContentControl
+                            x:Name="cp"
+                            Margin="0"
+                            Content="{TemplateBinding Content}"
+                            Focusable="False" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="Default">
+                                <VisualState Name="Enabled">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="sc"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="sc"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Visibility"
+                                            Duration="0:0:0">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <BooleanAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="IsHitTestVisible"
+                                            Duration="0:0:.25">
+                                            <DiscreteBooleanKeyFrame KeyTime="0:0:.25" Value="True" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="sc"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To=".65"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="sc"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To=".65"
+                                            Duration="0:0:.25" />
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Visibility"
+                                            Duration="0:0:.25">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:.25" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <BooleanAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="IsHitTestVisible"
+                                            Duration="0:0:0">
+                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

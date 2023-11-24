@@ -1,0 +1,253 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Awe.UI.Controls">
+    <Style x:Key="Default1" TargetType="local:Loading">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Loading">
+                    <Grid>
+                        <Grid
+                            x:Name="layout"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RenderTransformOrigin=".5,.5">
+                            <FrameworkElement.RenderTransform>
+                                <RotateTransform />
+                            </FrameworkElement.RenderTransform>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="8" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="8" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse
+                                x:Name="x1"
+                                Grid.Column="0"
+                                Width="14"
+                                Height="14"
+                                Fill="{TemplateBinding Foreground}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform />
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+                            <Ellipse
+                                x:Name="x2"
+                                Grid.Column="2"
+                                Width="14"
+                                Height="14"
+                                Fill="{TemplateBinding Foreground}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform />
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+                            <Ellipse
+                                x:Name="x3"
+                                Grid.Column="4"
+                                Width="14"
+                                Height="14"
+                                Fill="{TemplateBinding Foreground}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform />
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <CubicEase x:Key="EasingIn" EasingMode="EaseOut" />
+                        <CircleEase x:Key="EasingOut" EasingMode="EaseOut" />
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingOut}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.45" />
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.25"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="x1"
+                                            Storyboard.TargetProperty="RenderTransform.Y">
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingOut}"
+                                                KeyTime="0:0:.45"
+                                                Value="-25" />
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingIn}"
+                                                KeyTime="0:0:1.15"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.5"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="x2"
+                                            Storyboard.TargetProperty="RenderTransform.Y">
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingOut}"
+                                                KeyTime="0:0:.45"
+                                                Value="-25" />
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingIn}"
+                                                KeyTime="0:0:1.15"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.75"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="x3"
+                                            Storyboard.TargetProperty="RenderTransform.Y">
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingOut}"
+                                                KeyTime="0:0:.45"
+                                                Value="-25" />
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingIn}"
+                                                KeyTime="0:0:1.15"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.25"
+                                            Storyboard.TargetName="x1"
+                                            Storyboard.TargetProperty="RenderTransform.Y">
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingOut}"
+                                                KeyTime="0:0:.45"
+                                                Value="-25" />
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingIn}"
+                                                KeyTime="0:0:1.15"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.5"
+                                            Storyboard.TargetName="x2"
+                                            Storyboard.TargetProperty="RenderTransform.Y">
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingOut}"
+                                                KeyTime="0:0:.45"
+                                                Value="-25" />
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingIn}"
+                                                KeyTime="0:0:1.15"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.75"
+                                            Storyboard.TargetName="x3"
+                                            Storyboard.TargetProperty="RenderTransform.Y">
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingOut}"
+                                                KeyTime="0:0:.45"
+                                                Value="-25" />
+                                            <EasingDoubleKeyFrame
+                                                EasingFunction="{StaticResource EasingIn}"
+                                                KeyTime="0:0:1.15"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingOut}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.45" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Default2" TargetType="local:Loading">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Height" Value="200" />
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Loading">
+                    <Grid>
+                        <Grid
+                            x:Name="layout"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RenderTransformOrigin=".5,.5">
+                            <Path
+                                x:Name="arc"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                RenderTransformOrigin=".5,.5"
+                                Stretch="Uniform"
+                                Stroke="{TemplateBinding Foreground}"
+                                StrokeThickness="{TemplateBinding FontSize}">
+                                <Path.RenderTransform>
+                                    <RotateTransform />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <CubicEase x:Key="EasingIn" EasingMode="EaseOut" />
+                        <CircleEase x:Key="EasingOut" EasingMode="EaseOut" />
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="arc"
+                                            Storyboard.TargetProperty="RenderTransform.Angle">
+                                            <SplineDoubleKeyFrame KeyTime="0:0:.0" Value="0" />
+                                            <SplineDoubleKeyFrame KeyTime="0:0:.75" Value="360" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingIn}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames
+                                            BeginTime="0:0:.25"
+                                            Storyboard.TargetName="arc"
+                                            Storyboard.TargetProperty="RenderTransform.Angle">
+                                            <SplineDoubleKeyFrame KeyTime="0:0:.0" Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingIn}"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

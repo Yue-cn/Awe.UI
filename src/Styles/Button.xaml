@@ -6,6 +6,7 @@
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style>
+                    <Setter Property="Panel.ZIndex" Value="999" />
                     <Setter Property="Control.Template">
                         <Setter.Value>
                             <ControlTemplate>
@@ -28,10 +29,12 @@
         </Setter>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Padding" Value="14,10" />
         <Setter Property="Background" Value="#08FFFFFF" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="ToolTip" Value="{Binding Content, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -43,7 +46,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3"
-                            ToolTip="{TemplateBinding Content}">
+                            ToolTip="{TemplateBinding ToolTip}">
                             <Border.Background>
                                 <VisualBrush>
                                     <VisualBrush.Visual>
@@ -72,12 +75,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <ContentPresenter Content="{Binding (ui:ControlHelper.Icon), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Margin="1"
-                                    Text="{TemplateBinding Content}"
-                                    TextTrimming="CharacterEllipsis" />
+                                <ContentPresenter Content="{TemplateBinding ui:ControlHelper.Icon}" />
+                                <ContentPresenter Grid.Column="1" Margin="1" />
                             </Grid>
                         </Border>
                     </Grid>
@@ -202,7 +201,9 @@
         <Setter Property="Background" Value="{DynamicResource Awe.UI.AccentColor}" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="ToolTip" Value="{Binding Content, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -214,7 +215,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3"
-                            ToolTip="{TemplateBinding Content}">
+                            ToolTip="{TemplateBinding ToolTip}">
                             <Border.Background>
                                 <VisualBrush>
                                     <VisualBrush.Visual>
@@ -247,13 +248,12 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <ContentPresenter Content="{Binding (ui:ControlHelper.Icon), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                                <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding ui:ControlHelper.Icon}" />
 
-                                <TextBlock
+                                <ContentPresenter
                                     Grid.Column="1"
-                                    Margin="1"
-                                    Text="{TemplateBinding Content}"
-                                    TextTrimming="CharacterEllipsis" />
+                                    Margin="0"
+                                    VerticalAlignment="Center" />
                             </Grid>
                         </Border>
                     </Grid>
@@ -374,6 +374,7 @@
         TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource Awe.UI.DefaultBorderBrush}" />
+        <Setter Property="ToolTip" Value="{Binding Content, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -385,7 +386,7 @@
                             Background="Transparent"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3"
-                            ToolTip="{TemplateBinding Content}">
+                            ToolTip="{TemplateBinding ToolTip}">
                             <Border.BorderBrush>
                                 <VisualBrush>
                                     <VisualBrush.Visual>
@@ -408,7 +409,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <ContentPresenter Content="{Binding (ui:ControlHelper.Icon), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                                <ContentPresenter Content="{TemplateBinding ui:ControlHelper.Icon}" />
 
                                 <TextBlock
                                     Grid.Column="1"

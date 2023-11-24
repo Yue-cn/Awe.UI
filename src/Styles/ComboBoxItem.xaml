@@ -9,7 +9,6 @@
                             <ControlTemplate>
                                 <Border
                                     Margin="0"
-                                    BorderBrush="{DynamicResource AccentColor}"
                                     BorderThickness="2"
                                     CornerRadius="0"
                                     SnapsToDevicePixels="True">

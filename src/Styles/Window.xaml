@@ -230,30 +230,30 @@
                                             FillBehavior="Stop"
                                             Storyboard.TargetName="windDialog"
                                             Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                            From="0.85"
+                                            From="0.95"
                                             To="1"
-                                            Duration="0:0:.2" />
+                                            Duration="0:0:.15" />
                                         <DoubleAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             FillBehavior="Stop"
                                             Storyboard.TargetName="windDialog"
                                             Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                            From="0.85"
+                                            From="0.95"
                                             To="1"
-                                            Duration="0:0:.2" />
+                                            Duration="0:0:.15" />
                                         <DoubleAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             Storyboard.TargetName="windContent"
                                             Storyboard.TargetProperty="Opacity"
-                                            To="0.6"
+                                            To="0.1"
                                             Duration="0:0:.15" />
                                         <ThicknessAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             Storyboard.TargetName="windDialog"
                                             Storyboard.TargetProperty="Margin"
-                                            From="0,-16,0,0"
+                                            From="0,-12,0,0"
                                             To="0"
-                                            Duration="0:0:.25" />
+                                            Duration="0:0:.15" />
                                         <BooleanAnimationUsingKeyFrames
                                             Storyboard.TargetName="windContent"
                                             Storyboard.TargetProperty="IsHitTestVisible"
