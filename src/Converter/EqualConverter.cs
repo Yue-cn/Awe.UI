@@ -16,14 +16,7 @@ namespace Awe.UI.Converter
 
             if (parameter is string str && bool.TryParse(str, out var vl))
             {
-                if (value.Equals(vl))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return value.Equals(vl);
             }
             else if (!value.Equals(parameter))
             {

@@ -177,32 +177,28 @@
         <Setter Property="Foreground" Value="White" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Opacity" Value="0" />
-        <Setter Property="Height" Value="200" />
-        <Setter Property="Width" Value="200" />
+        <Setter Property="Height" Value="128" />
+        <Setter Property="Width" Value="128" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Loading">
-                    <Grid>
-                        <Grid
-                            x:Name="layout"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            RenderTransformOrigin=".5,.5">
-                            <Path
-                                x:Name="arc"
-                                Width="{TemplateBinding Width}"
-                                Height="{TemplateBinding Height}"
-                                RenderTransformOrigin=".5,.5"
-                                Stretch="Uniform"
-                                Stroke="{TemplateBinding Foreground}"
-                                StrokeThickness="{TemplateBinding FontSize}">
-                                <Path.RenderTransform>
-                                    <RotateTransform />
-                                </Path.RenderTransform>
-                            </Path>
-                        </Grid>
+
+                    <Grid x:Name="layout">
+                        <Path
+                            x:Name="arc"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            RenderTransformOrigin=".5,.5"
+                            Stretch="Uniform"
+                            Stroke="{TemplateBinding Foreground}"
+                            StrokeThickness="{TemplateBinding FontSize}">
+                            <Path.RenderTransform>
+                                <RotateTransform />
+                            </Path.RenderTransform>
+                        </Path>
                     </Grid>
+
                     <ControlTemplate.Resources>
                         <CubicEase x:Key="EasingIn" EasingMode="EaseOut" />
                         <CircleEase x:Key="EasingOut" EasingMode="EaseOut" />

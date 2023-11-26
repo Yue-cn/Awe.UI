@@ -7,12 +7,12 @@
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style>
-                    <Setter Property="Panel.ZIndex" Value="999" />
+
                     <Setter Property="Control.Template">
                         <Setter.Value>
                             <ControlTemplate>
                                 <Border
-                                    Margin="-2"
+                                    Margin="-4"
                                     BorderBrush="White"
                                     BorderThickness="2"
                                     CornerRadius="3"
@@ -30,6 +30,7 @@
         </Setter>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="ToolTip" Value="{Binding Content, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
         <Setter Property="Template">

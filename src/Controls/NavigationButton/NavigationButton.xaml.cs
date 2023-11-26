@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 
 namespace Awe.UI.Controls
@@ -48,6 +49,14 @@ namespace Awe.UI.Controls
             }
 
             base.OnClick();
+        }
+
+
+
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new NavigationButtonAutomationPeer(this);
         }
     }
 }

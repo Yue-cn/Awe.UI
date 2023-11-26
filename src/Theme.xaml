@@ -4,6 +4,9 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
 
+    <Color x:Key="Awe.UI.AccentLinearGradient.1">#2B2B2B</Color>
+    <Color x:Key="Awe.UI.AccentLinearGradient.2">#202020</Color>
+
     <SolidColorBrush x:Key="Awe.UI.AccentColor" Color="#72A0C9" />
     <SolidColorBrush x:Key="Awe.UI.AccentColorHover" Color="#529BDB" />
     <SolidColorBrush x:Key="Awe.UI.AccentColorPressed" Color="#0F6FB8" />
@@ -30,7 +33,8 @@
         <ResourceDictionary Source="./Styles/ContextMenu.xaml" />
         <ResourceDictionary Source="./Styles/PasswordBox.xaml" />
         <ResourceDictionary Source="./Controls/Loading/Loading.xaml" />
-        <ResourceDictionary Source="./Controls/Loading/Loading.xaml" />
+        <ResourceDictionary Source="./Controls/NavigationButton/NavigationButton.xaml" />
+        <ResourceDictionary Source="./Controls/ToggleSwitch/ToggleSwitch.xaml" />
         <ResourceDictionary Source="./Controls/SelectableTextBlock/SelectableTextBlock.xaml" />
         <ResourceDictionary Source="./Controls/VisibilityTranstion/VisibilityTranstion.xaml" />
     </ResourceDictionary.MergedDictionaries>
