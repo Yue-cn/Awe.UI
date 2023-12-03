@@ -11,6 +11,11 @@ namespace Awe.UI.Controls
 {
     public class ToggleSwitch : ToggleButton
     {
+        public ToggleSwitch()
+        {
+            
+        }
+
         private FrameworkElement? __fe { get; set; }
 
         public override void OnApplyTemplate()
@@ -21,10 +26,10 @@ namespace Awe.UI.Controls
             }
             if (IsChecked is true && __fe is not null)
             {
-                VisualStateManager.GoToElementState(__fe, "CheckedStop", false);
+                VisualStateManager.GoToElementState(__fe, "SwitchDefaultOn", false);
             }
 
-            //base.OnApplyTemplate();
+            base.OnApplyTemplate();
         }
 
         public static readonly RoutedEvent ToggledEvent = EventManager.RegisterRoutedEvent(nameof(Toggled), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ToggleSwitch));
@@ -45,7 +50,7 @@ namespace Awe.UI.Controls
             OnToggled();
             if (__fe is not null)
             {
-                VisualStateManager.GoToElementState(__fe, "CheckedOn", false);
+                VisualStateManager.GoToElementState(__fe, "SwitchOn", false);
             }
             base.OnChecked(e);
         }
@@ -55,7 +60,7 @@ namespace Awe.UI.Controls
             OnToggled();
             if (__fe is not null)
             {
-                VisualStateManager.GoToElementState(__fe, "UncheckedOn", false);
+                VisualStateManager.GoToElementState(__fe, "SwitchOff", false);
             }
             base.OnUnchecked(e);
         }

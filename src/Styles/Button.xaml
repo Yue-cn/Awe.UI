@@ -188,7 +188,10 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
-
+                        <Trigger Property="ui:WindowsHelper.UseLightMode" Value="True">
+                            <Setter TargetName="pressedBorder" Property="Background" Value="#30000000" />
+                            <Setter TargetName="hoverBorder" Property="Background" Value="#10000000" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace Awe.UI.Helper
 {
@@ -56,6 +57,23 @@ namespace Awe.UI.Helper
             (target as ScrollViewer)?.ScrollToHorizontalOffset((double)e.NewValue);
         }
 
+        public static readonly DependencyProperty IsAnimationingProperty =
+           DependencyProperty.RegisterAttached(
+               "IsAnimationing",
+               typeof(bool),
+               typeof(ScrollViewerBehavior),
+               new UIPropertyMetadata(false));
+
+        public static void SetIsAnimationing(FrameworkElement target, bool value)
+        {
+            target.SetValue(IsAnimationingProperty, value);
+        }
+
+        public static bool GetIsAnimationing(FrameworkElement target)
+        {
+            return (bool)target.GetValue(IsAnimationingProperty);
+        }
+
         public static readonly DependencyProperty UseSmoothScrollProperty =
             DependencyProperty.RegisterAttached(
                 "UseSmoothScroll",
@@ -68,9 +86,9 @@ namespace Awe.UI.Helper
             target.SetValue(HorizontalOffsetProperty, value);
         }
 
-        public static double GetUseSmoothScroll(FrameworkElement target)
+        public static bool GetUseSmoothScroll(FrameworkElement target)
         {
-            return (double)target.GetValue(HorizontalOffsetProperty);
+            return (bool)target.GetValue(HorizontalOffsetProperty);
         }
 
 
@@ -88,6 +106,14 @@ namespace Awe.UI.Helper
             double LastHorizontalLocation = 0;
             if (e.NewValue is true && target is ScrollViewer sv)
             {
+                sv.ScrollChanged += (x, e) =>
+                {
+                    if (!GetIsAnimationing(sv))
+                    {
+                        LastHorizontalLocation = e.HorizontalOffset;
+                        LastVerticalLocation = e.VerticalOffset;
+                    }
+                };
                 sv.PreviewMouseWheel += (x, e) =>
                 {
                     var dr = GetDirection();
@@ -114,16 +140,19 @@ namespace Awe.UI.Helper
                         }
 
                         sv.ScrollToVerticalOffset(LastVerticalLocation);
+                        sv.ScrollToHorizontalOffset(LastHorizontalLocation);
 
                         double scale = Math.Abs((LastVerticalLocation - newOffset) / WheelChange);
 
-                        AnimateScroll(sv,newOffset, dr, scale);
+                        AnimateScroll(sv, newOffset, dr, scale);
                         LastVerticalLocation = newOffset;
                     }
                     else
                     {
                         double WheelChange = e.Delta * (sv.ViewportWidth / 1.5) / sv.ActualWidth;
                         double newOffset = LastHorizontalLocation - WheelChange;
+
+                        
 
                         if (newOffset < 0)
                         {
@@ -142,16 +171,17 @@ namespace Awe.UI.Helper
                             return;
                         }
 
-
+                        sv.ScrollToVerticalOffset(LastVerticalLocation); 
                         sv.ScrollToHorizontalOffset(LastHorizontalLocation);
 
                         double scale = Math.Abs((LastHorizontalLocation - newOffset) / WheelChange);
 
-                        AnimateScroll(sv,newOffset, dr, scale);
+                        AnimateScroll(sv, newOffset, dr, scale);
                         LastHorizontalLocation = newOffset;
                     }
 
                 };
+
 
             }
 
@@ -181,11 +211,11 @@ namespace Awe.UI.Helper
                 cv.BeginAnimation(ScrollViewerBehavior.HorizontalOffsetProperty, Animation);
             }
 
-            //cv.BeginAnimation(ScrollViewerBehavior.IsAnimatingProperty, null);
-            //BooleanAnimationUsingKeyFrames keyFramesAnimation = new BooleanAnimationUsingKeyFrames();
-            //keyFramesAnimation.KeyFrames.Add(new DiscreteBooleanKeyFrame(true, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
-            //keyFramesAnimation.KeyFrames.Add(new DiscreteBooleanKeyFrame(false, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(400 * Scale + 1))));
-            //cv.BeginAnimation(ScrollViewerBehavior.IsAnimatingProperty, keyFramesAnimation);
+            cv.BeginAnimation(ScrollViewerBehavior.IsAnimationingProperty, null);
+            BooleanAnimationUsingKeyFrames keyFramesAnimation = new BooleanAnimationUsingKeyFrames();
+            keyFramesAnimation.KeyFrames.Add(new DiscreteBooleanKeyFrame(true, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
+            keyFramesAnimation.KeyFrames.Add(new DiscreteBooleanKeyFrame(false, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(400 * Scale + 1))));
+            cv.BeginAnimation(ScrollViewerBehavior.IsAnimationingProperty, keyFramesAnimation);
         }
     }
 }

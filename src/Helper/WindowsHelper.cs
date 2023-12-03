@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,11 +12,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Awe.UI.Helper
 {
     public class WindowsHelper
     {
+
+        #region VisibilityToFocus
 
         public static readonly DependencyProperty VisibilityToFocusProperty =
             DependencyProperty.RegisterAttached("VisibilityToFocus", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnVisibilityToFocusChanged));
@@ -61,9 +66,9 @@ namespace Awe.UI.Helper
             }
         }
 
+        #endregion
 
-
-
+        #region MaximumSnap
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaximumSnapProperty =
             DependencyProperty.RegisterAttached("MaximumSnap", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false,OnMaximumSnapChanged));
@@ -107,6 +112,8 @@ namespace Awe.UI.Helper
                 }
             }
         }
+
+        #endregion
 
         #region Maximun Fix
         private static SolidColorBrush DefaultButtonBackground = new SolidColorBrush
@@ -304,10 +311,7 @@ namespace Awe.UI.Helper
 
         #endregion
 
-
-
-
-
+        #region DialongContent
         public static readonly DependencyProperty DialogContentProperty =
     DependencyProperty.RegisterAttached("DialogContent", typeof(FrameworkElement), typeof(WindowsHelper), new PropertyMetadata(null,OnDialogContentChanged));
 
@@ -317,19 +321,162 @@ namespace Awe.UI.Helper
         public static void SetDialogContent(DependencyObject obj, FrameworkElement value)
             => obj.SetValue(DialogContentProperty, value);
 
-        public static readonly DependencyProperty DialogOpennedSnapProperty =
+        public static readonly DependencyProperty DialogOpennedProperty =
             DependencyProperty.RegisterAttached("DialogOpenned", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false));
 
         public static bool GetDialogOpenned(DependencyObject obj)
-            => (bool)obj.GetValue(DialogOpennedSnapProperty);
+            => (bool)obj.GetValue(DialogOpennedProperty);
 
         public static void SetDialogOpenned(DependencyObject obj, bool value)
-            => obj.SetValue(DialogOpennedSnapProperty, value);
+            => obj.SetValue(DialogOpennedProperty, value);
 
         private static void OnDialogContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is null) { SetDialogOpenned(d, false); }
         }
+        #endregion
 
+        #region UseLightMode
+        public static readonly DependencyProperty UseLightModeProperty =
+           DependencyProperty.RegisterAttached("UseLightMode", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnUseLightModeChanged));
+
+        public static bool GetUseLightMode(DependencyObject obj)
+            => (bool)obj.GetValue(UseLightModeProperty);
+
+        public static void SetUseLightMode(DependencyObject obj, bool value)
+            => obj.SetValue(UseLightModeProperty, value);
+
+        private static void OnUseLightModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (true)
+            {
+                DefaultButtonForeground.Color = e.NewValue is true ? Colors.Black : Colors.White;
+                _pressFeColor.Color = e.NewValue is true ? Color.FromArgb(0x9f, 0x0,0x0,0x0) : Color.FromArgb(0x9f, 0xff, 0xff, 0xff);
+            }
+        }
+
+
+        #endregion
+
+        #region MenuHost
+
+        private static Canvas? _displayPlacement;
+
+        public static readonly DependencyProperty IsMenuHostProperty =
+            DependencyProperty.RegisterAttached("IsMenuHost", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnIsMenuHostChanged));
+
+        public static bool GetIsMenuHost(Canvas obj)
+            => (bool)obj.GetValue(IsMenuHostProperty);
+
+        public static void SetIsMenuHost(Canvas obj, bool value)
+            => obj.SetValue(IsMenuHostProperty, value);
+
+        private static void OnIsMenuHostChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Canvas fe)
+            {
+                if (e.NewValue is true)
+                {
+                    _displayPlacement = fe;
+                   
+                }
+                else
+                {
+                    _displayPlacement = default;
+                }
+            }
+        }
+
+        public static void DisplayMenu(FrameworkElement fe)
+        {
+            var va = Mouse.GetPosition(_displayPlacement);
+
+            if (_displayPlacement is not null)
+            {
+                
+
+                _displayPlacement.Children.Clear();
+                var container = new ContentControl()
+                {
+                    Focusable = false,
+                    Content = fe
+                };
+
+                var fiw = va.X;
+                var fih = va.Y;
+
+                if (fe.ActualWidth is 0)
+                {
+                    SizeChangedEventHandler? handle = null;
+                    handle = (object _, SizeChangedEventArgs e) =>
+                    {
+                        if (!e.NewSize.IsEmpty)
+                        {
+                            if (va.X + e.NewSize.Width > _displayPlacement.ActualWidth)
+                            {
+                                fiw = va.X - e.NewSize.Width;
+                            }
+                            if (va.Y + e.NewSize.Width > _displayPlacement.ActualHeight)
+                            {
+                                fih = va.Y - e.NewSize.Height;
+                            }
+
+                            container.SetValue(Canvas.TopProperty, fih);
+                            container.SetValue(Canvas.LeftProperty, fiw);
+                            fe.RemoveHandler(FrameworkElement.SizeChangedEvent, handle);
+                        }
+                    };
+                    fe.SizeChanged += handle;
+                }
+
+                if (va.X + fe.ActualWidth > _displayPlacement.ActualWidth)
+                {
+                    fiw -= fe.ActualWidth;
+                }
+                if (va.Y + fe.ActualHeight > _displayPlacement.ActualHeight)
+                {
+                    fih -= fe.ActualWidth;
+                }
+
+                container.SetValue(Canvas.TopProperty, fih);
+                container.SetValue(Canvas.LeftProperty, fiw);
+
+
+
+
+                container.BeginAnimation(Canvas.OpacityProperty, new DoubleAnimation()
+                {
+                    EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut},
+                    Duration = TimeSpan.FromMilliseconds(250),
+                    To = 1,
+                    From = 0,
+                });
+                _displayPlacement.Children.Add(container);
+                _displayPlacement.Background = new SolidColorBrush()
+                {
+                    Color = Colors.Transparent
+                };
+                _displayPlacement.PreviewMouseDown += async (x, e) =>
+                {
+                    var ve = e.GetPosition(fe);
+                    var pl = e.GetPosition(_displayPlacement);
+                    if (ve.X < 0 || ve.Y < 0 || pl.X > fiw + fe.ActualWidth || pl.Y > fih + fe.ActualHeight)
+                    {
+                        container.IsHitTestVisible = false;
+                        container.BeginAnimation(Canvas.OpacityProperty, new DoubleAnimation()
+                        {
+                            EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut },
+                            Duration = TimeSpan.FromMilliseconds(250),
+                            To = 0,
+                        });
+                        await Task.Delay(250);
+                        _displayPlacement.ClearValue(Canvas.BackgroundProperty);
+                        _displayPlacement.Children.Clear();
+                    }
+                };
+            }
+        }
+
+        #endregion
     }
 }

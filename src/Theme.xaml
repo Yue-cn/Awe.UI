@@ -4,8 +4,10 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
 
-    <Color x:Key="Awe.UI.AccentLinearGradient.1">#2B2B2B</Color>
-    <Color x:Key="Awe.UI.AccentLinearGradient.2">#202020</Color>
+    <Color x:Key="Awe.UI.AccentDarkLinearGradient.1">#a1acb5</Color>
+    <Color x:Key="Awe.UI.AccentDarkLinearGradient.2">#6d7f8e</Color>
+    <Color x:Key="Awe.UI.AccentLightLinearGradient.1">#F0FFFF</Color>
+    <Color x:Key="Awe.UI.AccentLightLinearGradient.2">#FFFAFA</Color>
 
     <SolidColorBrush x:Key="Awe.UI.AccentColor" Color="#72A0C9" />
     <SolidColorBrush x:Key="Awe.UI.AccentColorHover" Color="#529BDB" />

@@ -12,7 +12,7 @@
                 <ControlTemplate TargetType="local:VisibilityTranstion">
                     <Border
                         x:Name="layout"
-                        Padding="0"
+                        Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         RenderTransformOrigin=".5,.5"
                         UseLayoutRounding="True">

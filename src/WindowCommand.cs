@@ -46,6 +46,16 @@ namespace Awe.UI
                             wind.WindowState = WindowState.Normal;
                             break;
                         }
+                    case "cdf":
+                        {
+                            wind.Dispatcher.Invoke(async () =>
+                            {
+                                wind.SetValue(Awe.UI.Helper.WindowsHelper.DialogOpennedProperty, false);
+                                await Task.Delay(250);
+                                wind.SetCurrentValue(Awe.UI.Helper.WindowsHelper.DialogContentProperty, DependencyProperty.UnsetValue);
+                            });
+                            break;
+                        }
                 }
             }
         }
@@ -55,5 +65,6 @@ namespace Awe.UI
         public static ICommand MinimizeWindowCommand = new WindowCommand("minimize");
         public static ICommand MaximizeWindowCommand = new WindowCommand("maximize");
         public static ICommand RestoreWindowCommand = new WindowCommand("restore");
+        public static ICommand CloseDialogForWindowCommand = new WindowCommand("cdf");
     }
 }

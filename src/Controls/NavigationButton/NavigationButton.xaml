@@ -36,8 +36,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:NavigationButton">
-                    <Border Background="{TemplateBinding Background}">
-                        <ContentPresenter Focusable="False" />
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter Focusable="False" />
+                        </Border>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
