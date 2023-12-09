@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:Awe.UI.Converter"
-    xmlns:local="clr-namespace:Awe.UI.Controls">
+    xmlns:local="clr-namespace:Awe.UI.Controls"
+    xmlns:pf="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
     <Style TargetType="local:VisibilityTranstion">
         <Setter Property="IsDisplay" Value="True" />
         <Setter Property="Focusable" Value="False" />
@@ -10,16 +11,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:VisibilityTranstion">
+                    <ControlTemplate.Resources>
+                        <converter:RollbackConverter x:Key="RollbackConverter" />
+                        <CubicEase x:Key="EasingFunc" pf:Freeze="True" />
+
+                    </ControlTemplate.Resources>
                     <Border
                         x:Name="layout"
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         RenderTransformOrigin=".5,.5"
                         UseLayoutRounding="True">
-                        <Border.Resources>
-                            <converter:RollbackConverter x:Key="RollbackConverter" />
-                            <CubicEase x:Key="EasingFunc" />
-                        </Border.Resources>
                         <Border.RenderTransform>
                             <TransformGroup>
                                 <TranslateTransform x:Name="pl" X="0" Y="0" />

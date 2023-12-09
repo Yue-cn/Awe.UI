@@ -7,7 +7,6 @@
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style>
-
                     <Setter Property="Control.Template">
                         <Setter.Value>
                             <ControlTemplate>
@@ -36,10 +35,49 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:NavigationButton">
-                    <Border Padding="{TemplateBinding Padding}">
+                    <Border x:Name="__TranLayout" Padding="{TemplateBinding Padding}">
                         <Border Background="{TemplateBinding Background}">
                             <ContentPresenter Focusable="False" />
                         </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState Name="DfEnabled">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="__TranLayout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState Name="DfDisabled">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="__TranLayout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.35"
+                                            Duration="0:0:.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState Name="DfDisabledEnd">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="__TranLayout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.35"
+                                            Duration="0:0:0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

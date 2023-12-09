@@ -1,4 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:Awe.UI.Converter"
+    xmlns:ui="clr-namespace:Awe.UI.Helper">
     <Style TargetType="TextBox">
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
@@ -7,7 +11,7 @@
                         <Setter.Value>
                             <ControlTemplate>
                                 <Border
-                                    Margin="-2"
+                                    Margin="-4"
                                     BorderBrush="White"
                                     BorderThickness="2"
                                     CornerRadius="3"
@@ -32,8 +36,12 @@
         <Setter Property="CaretBrush" Value="{DynamicResource Awe.UI.AccentColorPressed}" />
         <Setter Property="ContextMenu">
             <Setter.Value>
-                <ContextMenu Width="175" StaysOpen="True">
+                <ContextMenu
+                    x:Name="xc"
+                    Width="175"
+                    ui:TextBoxHelper.ContextMenuThemeFix="True">
                     <ContextMenu.Resources>
+
                         <Style x:Key="vk" TargetType="Separator">
                             <Setter Property="Background" Value="#3fffffff" />
                             <Setter Property="Focusable" Value="false" />
@@ -64,8 +72,12 @@
                         <Geometry x:Key="Undo">
                             F1 M 18.75 6.25 C 18.75 7.1875 18.553059 8.071289 18.15918 8.901367 C 17.765299 9.731445 17.210285 10.449219 16.494141 11.054688 L 6.025391 19.853516 C 5.908203 19.951172 5.774739 20 5.625 20 C 5.455729 20 5.309245 19.93815 5.185547 19.814453 C 5.061849 19.690756 5 19.544271 5 19.375 C 5 19.283854 5.019531 19.195963 5.058594 19.111328 C 5.097656 19.026693 5.152995 18.955078 5.224609 18.896484 L 15.693359 10.097656 C 16.298828 9.589844 16.751301 9.000651 17.050781 8.330078 C 17.35026 7.659506 17.5 6.933594 17.5 6.152344 C 17.5 5.716146 17.439777 5.29297 17.319336 4.882812 C 17.198893 4.472657 17.029621 4.085287 16.811523 3.720703 C 16.593424 3.356121 16.333008 3.022461 16.030273 2.719727 C 15.727539 2.416992 15.39388 2.156576 15.029297 1.938477 C 14.664713 1.720379 14.277344 1.551107 13.867188 1.430664 C 13.457031 1.310223 13.033854 1.25 12.597656 1.25 C 11.985677 1.25 11.401367 1.344402 10.844727 1.533203 C 10.288086 1.722006 9.775391 2.011719 9.306641 2.402344 L 4.6875 6.25 L 9.375 6.25 C 9.544271 6.25 9.690755 6.31185 9.814453 6.435547 C 9.93815 6.559245 10 6.705729 10 6.875 C 10 7.044271 9.93815 7.190756 9.814453 7.314453 C 9.690755 7.438151 9.544271 7.5 9.375 7.5 L 3.125 7.5 C 2.955729 7.5 2.809245 7.438151 2.685547 7.314453 C 2.561849 7.190756 2.5 7.044271 2.5 6.875 L 2.5 0.625 C 2.5 0.45573 2.561849 0.309246 2.685547 0.185547 C 2.809245 0.06185 2.955729 0 3.125 0 C 3.294271 0 3.440755 0.06185 3.564453 0.185547 C 3.688151 0.309246 3.75 0.45573 3.75 0.625 L 3.75 5.400391 L 8.505859 1.445312 C 9.065755 0.976562 9.689127 0.61849 10.375977 0.371094 C 11.062825 0.123699 11.770833 0 12.5 0 C 13.365885 0 14.178059 0.162762 14.936523 0.488281 C 15.694986 0.813803 16.357422 1.259766 16.923828 1.826172 C 17.490234 2.392578 17.936197 3.055014 18.261719 3.813477 C 18.587238 4.57194 18.75 5.384115 18.75 6.25 Z
                         </Geometry>
+                        <!--<conv:BindingProxy x:Key="ThemeBindingProxy" Data="{x:Reference Name=xc}" />-->
                     </ContextMenu.Resources>
-                    <MenuItem Command="{x:Static ApplicationCommands.Undo}" FontSize="13">
+                    <MenuItem
+                        ui:WindowsHelper.UseLightMode="{Binding Path=Data.(ui:WindowsHelper.UseLightMode), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
+                        Command="{x:Static ApplicationCommands.Undo}"
+                        FontSize="13">
                         <MenuItem.Icon>
                             <Path
                                 Width="13"
@@ -74,11 +86,14 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{StaticResource Undo}"
-                                Fill="White"
+                                Fill="{Binding Path=Data.(TextElement.Foreground), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Command="{x:Static ApplicationCommands.Redo}" FontSize="13">
+                    <MenuItem
+                        ui:WindowsHelper.UseLightMode="{Binding Path=Data.(ui:WindowsHelper.UseLightMode), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
+                        Command="{x:Static ApplicationCommands.Redo}"
+                        FontSize="13">
                         <MenuItem.Icon>
                             <Path
                                 Width="13"
@@ -87,12 +102,25 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{StaticResource Redo}"
-                                Fill="White"
+                                Fill="{Binding Path=Data.(TextElement.Foreground), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource vk}" />
-                    <MenuItem Command="{x:Static ApplicationCommands.Copy}" FontSize="13">
+                    <Separator>
+                        <Separator.Style>
+                            <Style BasedOn="{StaticResource vk}" TargetType="Separator">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Data.(ui:WindowsHelper.UseLightMode), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}" Value="True">
+                                        <Setter Property="Background" Value="#2f2f2f2f" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Separator.Style>
+                    </Separator>
+                    <MenuItem
+                        ui:WindowsHelper.UseLightMode="{Binding Path=Data.(ui:WindowsHelper.UseLightMode), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
+                        Command="{x:Static ApplicationCommands.Copy}"
+                        FontSize="13">
                         <MenuItem.Icon>
                             <Path
                                 Width="13"
@@ -101,11 +129,14 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{StaticResource Copy}"
-                                Fill="White"
+                                Fill="{Binding Path=Data.(TextElement.Foreground), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Command="{x:Static ApplicationCommands.Paste}" FontSize="13">
+                    <MenuItem
+                        ui:WindowsHelper.UseLightMode="{Binding Path=Data.(ui:WindowsHelper.UseLightMode), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
+                        Command="{x:Static ApplicationCommands.Paste}"
+                        FontSize="13">
                         <MenuItem.Icon>
                             <Path
                                 Width="13"
@@ -114,7 +145,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{StaticResource Paste}"
-                                Fill="White"
+                                Fill="{Binding Path=Data.(TextElement.Foreground), Source={StaticResource ThemeBindingProxy}, Mode=OneWay}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
@@ -124,30 +155,78 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Border BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
-                        <Border.BorderBrush>
-                            <VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
-                                        <Grid Background="{TemplateBinding BorderBrush}" />
-                                        <Grid
-                                            x:Name="hoverBorder"
-                                            Background="{DynamicResource Awe.UI.AccentColorHover}"
-                                            Opacity="0" />
-                                        <Grid
-                                            x:Name="focusedBorder"
-                                            Background="{DynamicResource Awe.UI.AccentColorPressed}"
-                                            Opacity="0" />
-                                    </Grid>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Border.BorderBrush>
-                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
-                    </Border>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            x:Name="__Header"
+                            Grid.Row="0"
+                            Padding="0,0,0,6"
+                            FontSize="14"
+                            Text="{TemplateBinding ui:ControlHelper.Header}"
+                            Visibility="Visible" />
+                        <Border
+                            x:Name="__Layout"
+                            Grid.Row="1"
+                            Margin="0"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3">
+                            <Border.BorderBrush>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+                                            <Grid Background="{TemplateBinding BorderBrush}" />
+                                            <Grid
+                                                x:Name="hoverBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorHover}"
+                                                Opacity="0" />
+                                            <Grid
+                                                x:Name="focusedBorder"
+                                                Background="{DynamicResource Awe.UI.AccentColorPressed}"
+                                                Opacity="0" />
+                                        </Grid>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush
+                                    x:Name="__LayoutBgc"
+                                    Opacity="0"
+                                    Color="#72A0C9" />
+                            </Border.Background>
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <TextBlock
+                                    x:Name="__Placeholder"
+                                    Padding="6,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="13"
+                                    IsHitTestVisible="False"
+                                    Opacity="1"
+                                    Text="{TemplateBinding ui:ControlHelper.Placeholder}"
+                                    TextTrimming="CharacterEllipsis"
+                                    Visibility="Collapsed" />
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Grid>
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Resources>
                         <CubicEase x:Key="TextBoxTranstion" EasingMode="EaseOut" />
                     </ControlTemplate.Resources>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="__Placeholder" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="__Placeholder" Property="Foreground" Value="#8f8f8f8f" />
+                        </Trigger>
+                        <Trigger Property="ui:ControlHelper.Header" Value="{x:Null}">
+                            <Setter TargetName="__Header" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ui:WindowsHelper.UseLightMode" Value="True">
+                            <Setter Property="BorderBrush" Value="#1f2f2f2f" />
+                            <Setter TargetName="__Placeholder" Property="Foreground" Value="#5f2f2f2f" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -173,7 +252,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
-                            <!--<Setter TargetName="border" Property="Background" Value="" />-->
+
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Trigger.EnterActions>
@@ -184,7 +263,13 @@
                                             Storyboard.TargetName="focusedBorder"
                                             Storyboard.TargetProperty="Opacity"
                                             To="1"
-                                            Duration="0:0:.25" />
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource TextBoxTranstion}"
+                                            Storyboard.TargetName="__LayoutBgc"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To=".05"
+                                            Duration="0:0:.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -194,6 +279,12 @@
                                         <DoubleAnimation
                                             EasingFunction="{StaticResource TextBoxTranstion}"
                                             Storyboard.TargetName="focusedBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.25" />
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource TextBoxTranstion}"
+                                            Storyboard.TargetName="__LayoutBgc"
                                             Storyboard.TargetProperty="Opacity"
                                             To="0"
                                             Duration="0:0:.25" />

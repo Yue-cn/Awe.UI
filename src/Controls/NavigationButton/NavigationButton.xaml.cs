@@ -11,6 +11,11 @@ namespace Awe.UI.Controls
 {
     public partial class NavigationButton : ButtonBase
     {
+        public NavigationButton()
+        {
+            
+        }
+
         public string NavigateUrl
         {
             get { return (string)GetValue(NavigateUrlProperty); }
@@ -51,7 +56,22 @@ namespace Awe.UI.Controls
             base.OnClick();
         }
 
+        public override void OnApplyTemplate()
+        {
+            if (GetTemplateChild("__TranLayout") is FrameworkElement fe)
+            {
+                if (!fe.IsEnabled)
+                {
+                    VisualStateManager.GoToState(this, "DfDisabledEnd", false);
+                }
+                fe.IsEnabledChanged += delegate
+                {
+                    VisualStateManager.GoToState(this, fe.IsEnabled ? "DfEnabled" : "DfDisabled", false);
+                };
+            }
 
+            base.OnApplyTemplate();
+        }
 
 
         protected override AutomationPeer OnCreateAutomationPeer()

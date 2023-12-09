@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:awe="clr-namespace:Awe.UI"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:pf="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
     xmlns:ui="clr-namespace:Awe.UI.Helper">
     <Style x:Key="Awe.UI.DefaultWindow" TargetType="Window">
 
@@ -39,7 +40,10 @@
                                             <ScaleTransform ScaleX="1" ScaleY="1" />
                                         </ContentPresenter.RenderTransform>
                                     </ContentPresenter>
-                                    <Canvas ui:WindowsHelper.IsMenuHost="True" x:Name="windMenuWrapper" Focusable="False" />
+                                    <Canvas
+                                        x:Name="windMenuWrapper"
+                                        ui:WindowsHelper.IsMenuHost="True"
+                                        Focusable="False" />
                                 </Grid>
                                 <!--  Control Menu  -->
                                 <StackPanel
@@ -230,7 +234,7 @@
                         </Border>
                     </AdornerDecorator>
                     <ControlTemplate.Resources>
-                        <CubicEase x:Key="Transtion" EasingMode="EaseOut" />
+                        <CubicEase pf:Freeze="True" x:Key="Transtion"  EasingMode="EaseOut" />
                     </ControlTemplate.Resources>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding (ui:WindowsHelper.DialogOpenned), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True">
@@ -254,7 +258,7 @@
                                             Storyboard.TargetProperty="RenderTransform.ScaleX"
                                             From="0.95"
                                             To="1"
-                                            Duration="0:0:.15" />
+                                            Duration="0:0:.25" />
                                         <DoubleAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             FillBehavior="Stop"
@@ -262,7 +266,7 @@
                                             Storyboard.TargetProperty="RenderTransform.ScaleY"
                                             From="0.95"
                                             To="1"
-                                            Duration="0:0:.15" />
+                                            Duration="0:0:.25" />
                                         <DoubleAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             Storyboard.TargetName="windContent"
@@ -318,14 +322,14 @@
                                             Storyboard.TargetName="windDialog"
                                             Storyboard.TargetProperty="RenderTransform.ScaleX"
                                             To="0.85"
-                                            Duration="0:0:.35" />
+                                            Duration="0:0:.55" />
                                         <DoubleAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             FillBehavior="Stop"
                                             Storyboard.TargetName="windDialog"
                                             Storyboard.TargetProperty="RenderTransform.ScaleY"
                                             To="0.85"
-                                            Duration="0:0:.35" />
+                                            Duration="0:0:.55" />
                                         <ThicknessAnimation
                                             EasingFunction="{StaticResource Transtion}"
                                             Storyboard.TargetName="windDialog"

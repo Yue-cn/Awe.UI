@@ -10,6 +10,7 @@
                 <ControlTemplate TargetType="ContextMenu">
                     <Grid>
                         <Border
+                            x:Name="shad"
                             Margin="10"
                             Background="#4f111111"
                             CornerRadius="4">
@@ -26,7 +27,7 @@
                             CornerRadius="3">
 
                             <StackPanel
-                                Margin="2,2,2,-1.5"
+                                Margin="2,2.5,2,-1.5"
                                 IsItemsHost="True"
                                 KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </Border>
@@ -34,7 +35,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="ui:WindowsHelper.UseLightMode" Value="True">
                             <Setter TargetName="xr" Property="Background" Value="White" />
-                            <Setter TargetName="xr" Property="BorderBrush" Value="#878787" />
+                            <Setter TargetName="xr" Property="BorderBrush" Value="#7f979797" />
+                            <Setter TargetName="shad" Property="Margin" Value="10" />
+                            <Setter TargetName="shad" Property="Background" Value="#1f222222" />
                             <Setter Property="TextElement.Foreground" Value="Black" />
 
                         </Trigger>
