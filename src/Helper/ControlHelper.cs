@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Awe.UI.Helper
 {
-    public class ControlHelper
+    public static class ControlHelper
     {
         public static readonly DependencyProperty IconProperty =
          DependencyProperty.RegisterAttached("Icon", typeof(FrameworkElement), typeof(ControlHelper), new PropertyMetadata());
@@ -21,19 +21,19 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty PlaceholderProperty =
  DependencyProperty.RegisterAttached("Placeholder", typeof(string), typeof(ControlHelper), new PropertyMetadata());
 
-        public static string GetPlaceholder(DependencyObject obj)
+        public static string GetPlaceholder(FrameworkElement obj)
             => (string)obj.GetValue(PlaceholderProperty);
 
-        public static void SetPlaceholder(DependencyObject obj, string value)
+        public static void SetPlaceholder(FrameworkElement obj, string value)
             => obj.SetValue(PlaceholderProperty, value);
 
         public static readonly DependencyProperty HeaderProperty =
 DependencyProperty.RegisterAttached("Header", typeof(string), typeof(ControlHelper), new PropertyMetadata());
 
-        public static string GetHeader(DependencyObject obj)
+        public static string GetHeader(FrameworkElement obj)
             => (string)obj.GetValue(HeaderProperty);
 
-        public static void SetHeader(DependencyObject obj, string value)
+        public static void SetHeader(FrameworkElement obj, string value)
             => obj.SetValue(HeaderProperty, value);
     }
 }

@@ -17,7 +17,7 @@ using System.Windows.Media.Animation;
 
 namespace Awe.UI.Helper
 {
-    public class WindowsHelper
+    public static class WindowsHelper
     {
 
         #region VisibilityToFocus
@@ -25,10 +25,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty VisibilityToFocusProperty =
             DependencyProperty.RegisterAttached("VisibilityToFocus", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnVisibilityToFocusChanged));
 
-        public static bool GetVisibilityToFocus(DependencyObject obj)
+        public static bool GetVisibilityToFocus(FrameworkElement obj)
             => (bool)obj.GetValue(VisibilityToFocusProperty);
 
-        public static void SetVisibilityToFocus(DependencyObject obj, bool value)
+        public static void SetVisibilityToFocus(FrameworkElement obj, bool value)
             => obj.SetValue(VisibilityToFocusProperty, value);
 
         private static void OnVisibilityToFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -74,10 +74,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty MaximumSnapProperty =
             DependencyProperty.RegisterAttached("MaximumSnap", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false,OnMaximumSnapChanged));
 
-        public static bool GetMaximumSnap(DependencyObject obj)
+        public static bool GetMaximumSnap(Window obj)
             => (bool)obj.GetValue(MaximumSnapProperty);
 
-        public static void SetMaximumSnap(DependencyObject obj, bool value)
+        public static void SetMaximumSnap(Window obj, bool value)
             => obj.SetValue(MaximumSnapProperty, value);
 
         private static async void OnMaximumSnapChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -305,10 +305,10 @@ namespace Awe.UI.Helper
                 invokeProv?.Invoke();
         }
 
-        private void SetHoverColor()
-        {
-            //_hoverColor = (SolidColorBrush)Application.Current.Resources["SystemControlHighlightListLowBrush"] ?? new SolidColorBrush(Color.FromArgb(21, 255, 255, 255));
-        }
+        //private void SetHoverColor()
+        //{
+        //    //_hoverColor = (SolidColorBrush)Application.Current.Resources["SystemControlHighlightListLowBrush"] ?? new SolidColorBrush(Color.FromArgb(21, 255, 255, 255));
+        //}
 
         #endregion
 
@@ -316,24 +316,24 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty DialogContentProperty =
     DependencyProperty.RegisterAttached("DialogContent", typeof(FrameworkElement), typeof(WindowsHelper), new PropertyMetadata(null,OnDialogContentChanged));
 
-        public static FrameworkElement GetDialogContent(DependencyObject obj)
+        public static FrameworkElement GetDialogContent(Window obj)
             => (FrameworkElement)obj.GetValue(DialogContentProperty);
 
-        public static void SetDialogContent(DependencyObject obj, FrameworkElement value)
+        public static void SetDialogContent(Window obj, FrameworkElement value)
             => obj.SetValue(DialogContentProperty, value);
 
         public static readonly DependencyProperty DialogOpennedProperty =
             DependencyProperty.RegisterAttached("DialogOpenned", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false));
 
-        public static bool GetDialogOpenned(DependencyObject obj)
+        public static bool GetDialogOpenned(Window obj)
             => (bool)obj.GetValue(DialogOpennedProperty);
 
-        public static void SetDialogOpenned(DependencyObject obj, bool value)
+        public static void SetDialogOpenned(Window obj, bool value)
             => obj.SetValue(DialogOpennedProperty, value);
 
         private static void OnDialogContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is null) { SetDialogOpenned(d, false); }
+            if (e.NewValue is null && d is Window) { SetDialogOpenned((Window)d, false); }
         }
         #endregion
 
@@ -341,10 +341,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty UseLightModeProperty =
            DependencyProperty.RegisterAttached("UseLightMode", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnUseLightModeChanged));
 
-        public static bool GetUseLightMode(DependencyObject obj)
+        public static bool GetUseLightMode(FrameworkElement obj)
             => (bool)obj.GetValue(UseLightModeProperty);
 
-        public static void SetUseLightMode(DependencyObject obj, bool value)
+        public static void SetUseLightMode(FrameworkElement obj, bool value)
             => obj.SetValue(UseLightModeProperty, value);
 
         private static void OnUseLightModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -364,10 +364,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty LightModeRebindProperty =
             DependencyProperty.RegisterAttached("LightModeRebind", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnLightModeRebindChanged));
 
-        public static string GetLightModeRebind(DependencyObject obj)
+        public static string GetLightModeRebind(FrameworkElement obj)
             => (string)obj.GetValue(LightModeRebindProperty);
 
-        public static void SetLightModeRebind(DependencyObject obj, bool value)
+        public static void SetLightModeRebind(FrameworkElement obj, bool value)
             => obj.SetValue(LightModeRebindProperty, value);
 
         public static void OnLightModeRebindChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

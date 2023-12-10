@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace Awe.UI.Helper
 {
-    public class ScrollViewerBehavior
+    public static class ScrollViewerBehavior
     {
         public static readonly DependencyProperty VerticalOffsetProperty =
             DependencyProperty.RegisterAttached(
@@ -20,12 +20,12 @@ namespace Awe.UI.Helper
                 typeof(ScrollViewerBehavior),
                 new UIPropertyMetadata(0.0, OnVerticalOffsetChanged));
 
-        public static void SetVerticalOffset(FrameworkElement target, double value)
+        public static void SetVerticalOffset(ScrollViewer target, double value)
         {
             target.SetValue(VerticalOffsetProperty, value);
         }
 
-        public static double GetVerticalOffset(FrameworkElement target)
+        public static double GetVerticalOffset(ScrollViewer target)
         {
             return (double)target.GetValue(VerticalOffsetProperty);
         }
@@ -42,12 +42,12 @@ namespace Awe.UI.Helper
                 typeof(ScrollViewerBehavior),
                 new UIPropertyMetadata(0.0, OnHorizontalOffsetChanged));
 
-        public static void SetHorizontalOffset(FrameworkElement target, double value)
+        public static void SetHorizontalOffset(ScrollViewer target, double value)
         {
             target.SetValue(HorizontalOffsetProperty, value);
         }
 
-        public static double GetHorizontalOffset(FrameworkElement target)
+        public static double GetHorizontalOffset(ScrollViewer target)
         {
             return (double)target.GetValue(HorizontalOffsetProperty);
         }
@@ -64,12 +64,12 @@ namespace Awe.UI.Helper
                typeof(ScrollViewerBehavior),
                new UIPropertyMetadata(false));
 
-        public static void SetIsAnimationing(FrameworkElement target, bool value)
+        public static void SetIsAnimationing(ScrollViewer target, bool value)
         {
             target.SetValue(IsAnimationingProperty, value);
         }
 
-        public static bool GetIsAnimationing(FrameworkElement target)
+        public static bool GetIsAnimationing(ScrollViewer target)
         {
             return (bool)target.GetValue(IsAnimationingProperty);
         }
@@ -81,12 +81,12 @@ namespace Awe.UI.Helper
                 typeof(ScrollViewerBehavior),
                 new UIPropertyMetadata(false, OnUseSmoothScrollChanged));
 
-        public static void SetUseSmoothScroll(FrameworkElement target, bool value)
+        public static void SetUseSmoothScroll(ScrollViewer target, bool value)
         {
             target.SetValue(HorizontalOffsetProperty, value);
         }
 
-        public static bool GetUseSmoothScroll(FrameworkElement target)
+        public static bool GetUseSmoothScroll(ScrollViewer target)
         {
             return (bool)target.GetValue(HorizontalOffsetProperty);
         }

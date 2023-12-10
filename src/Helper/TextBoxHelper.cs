@@ -10,17 +10,17 @@ using System.Windows.Data;
 
 namespace Awe.UI.Helper
 {
-    public class TextBoxHelper
+    public static class TextBoxHelper
     {
         #region PasswordBinding
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordBindingProperty =
             DependencyProperty.RegisterAttached("PasswordBinding", typeof(string), typeof(TextBoxHelper), new PropertyMetadata("", OnPasswordBindingChanged));
 
-        public static string GetPasswordBinding(DependencyObject obj)
+        public static string GetPasswordBinding(PasswordBox obj)
             => (string)obj.GetValue(PasswordBindingProperty);
 
-        public static void SetPasswordBinding(DependencyObject obj, string value)
+        public static void SetPasswordBinding(PasswordBox obj, string value)
             => obj.SetValue(PasswordBindingProperty, value);
 
         public static void OnPasswordBindingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -40,10 +40,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty IntInputOnlyProperty =
             DependencyProperty.RegisterAttached("IntInputOnly", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(false, OnIntInputOnlyChanged));
 
-        public static string GetIntInputOnly(DependencyObject obj)
+        public static string GetIntInputOnly(TextBox obj)
             => (string)obj.GetValue(IntInputOnlyProperty);
 
-        public static void SetIntInputOnly(DependencyObject obj, bool value)
+        public static void SetIntInputOnly(TextBox obj, bool value)
             => obj.SetValue(IntInputOnlyProperty, value);
 
         public static void OnIntInputOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -86,22 +86,22 @@ namespace Awe.UI.Helper
                                         else
                                         {
                                             tb.Text = ccval.ToString();
-                                            SetIntInputRewriteBinding(d, ccval);
+                                            SetIntInputRewriteBinding(tb, ccval);
                                             return;
                                         }
                                     }
                                     tb.Text = "0"; tb.SelectionStart = tb.Text.Length;
-                                    SetIntInputRewriteBinding(d, 0);
+                                    SetIntInputRewriteBinding(tb, 0);
                                     return;
                                 }
                             }
                             if (int.TryParse(tb.Text, out var bl))
                             {
-                                SetIntInputRewriteBinding(d, ccval = bl);
+                                SetIntInputRewriteBinding(tb, ccval = bl);
                                 if (bl > 65535)
                                 {
                                     tb.Text = "65535";
-                                    SetIntInputRewriteBinding(d, ccval = 65535);
+                                    SetIntInputRewriteBinding(tb, ccval = 65535);
                                     tb.SelectionStart = tb.Text.Length;
 
                                 }
@@ -139,10 +139,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty IntInputRewriteBindingProperty =
             DependencyProperty.RegisterAttached("IntInputRewriteBinding", typeof(int), typeof(TextBoxHelper), new PropertyMetadata(0));
 
-        public static string GetIntInputRewriteBinding(DependencyObject obj)
+        public static string GetIntInputRewriteBinding(TextBox obj)
             => (string)obj.GetValue(IntInputRewriteBindingProperty);
 
-        public static void SetIntInputRewriteBinding(DependencyObject obj, int value)
+        public static void SetIntInputRewriteBinding(TextBox obj, int value)
             => obj.SetValue(IntInputRewriteBindingProperty, value);
         #endregion
     }

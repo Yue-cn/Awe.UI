@@ -37,6 +37,7 @@
         <ResourceDictionary Source="./Controls/Loading/Loading.xaml" />
         <ResourceDictionary Source="./Controls/NavigationButton/NavigationButton.xaml" />
         <ResourceDictionary Source="./Controls/ToggleSwitch/ToggleSwitch.xaml" />
+        <ResourceDictionary Source="./Controls/RwComboBox/RwComboBox.xaml" />
         <ResourceDictionary Source="./Controls/SelectableTextBlock/SelectableTextBlock.xaml" />
         <ResourceDictionary Source="./Controls/VisibilityTranstion/VisibilityTranstion.xaml" />
     </ResourceDictionary.MergedDictionaries>

@@ -16,10 +16,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(RectangleCliper), new PropertyMetadata(new CornerRadius(0),OnCornerRadiusChanged));
 
-        public static void SetCornerRadius(DependencyObject element, CornerRadius value)
+        public static void SetCornerRadius(FrameworkElement element, CornerRadius value)
         => element.SetValue(CornerRadiusProperty, value);
 
-        public static CornerRadius GetCornerRadius(DependencyObject element)
+        public static CornerRadius GetCornerRadius(FrameworkElement element)
             => (CornerRadius)element.GetValue(CornerRadiusProperty);
 
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

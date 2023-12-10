@@ -14,10 +14,10 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty BindingProperty =
                 DependencyProperty.RegisterAttached("Binding", typeof(TwiceBindingHelper), typeof(TwiceBindingHelper), new PropertyMetadata(null, OnBindingChanged));
 
-        public static TwiceBindingHelper GetBinding(DependencyObject obj)
+        public static TwiceBindingHelper GetBinding(FrameworkElement obj)
             => (TwiceBindingHelper)obj.GetValue(BindingProperty);
 
-        public static void SetBinding(DependencyObject obj, TwiceBindingHelper value)
+        public static void SetBinding(FrameworkElement obj, TwiceBindingHelper value)
             => obj.SetValue(BindingProperty, value);
 
         //private static void 
