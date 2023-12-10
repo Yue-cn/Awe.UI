@@ -3,81 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:Awe.UI.Helper">
 
-    <Style x:Key="ComboBoxContainer" TargetType="ToggleButton">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <Border
-                        MinHeight="20"
-                        Padding="0,8,8,8"
-                        Background="Transparent"
-                        BorderBrush="{DynamicResource Awe.UI.DefaultBorderBrush}"
-                        BorderThickness="1">
-                        <Grid>
-                            <!--  Arrow  -->
-                            <Grid
-                                x:Name="ar"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                RenderTransformOrigin=".5,.5"
-                                SnapsToDevicePixels="True">
-                                <Grid.RenderTransform>
-                                    <RotateTransform Angle="0" />
-                                </Grid.RenderTransform>
-                                <Path
-                                    Width="12"
-                                    Height="12"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="F1 M 2.5 6.875 C 2.5 6.705729 2.561849 6.559245 2.685547 6.435547 C 2.809245 6.31185 2.955729 6.25 3.125 6.25 C 3.294271 6.25 3.440755 6.31185 3.564453 6.435547 L 10 12.861328 L 16.435547 6.435547 C 16.559244 6.31185 16.705729 6.25 16.875 6.25 C 17.04427 6.25 17.190754 6.31185 17.314453 6.435547 C 17.43815 6.559245 17.5 6.705729 17.5 6.875 C 17.5 7.044271 17.43815 7.190756 17.314453 7.314453 L 10.439453 14.189453 C 10.315755 14.313151 10.169271 14.375 10 14.375 C 9.830729 14.375 9.684244 14.313151 9.560547 14.189453 L 2.685547 7.314453 C 2.561849 7.190756 2.5 7.044271 2.5 6.875 Z "
-                                    Fill="{DynamicResource Awe.UI.DefaultBorderBrush}"
-                                    Stretch="Uniform" />
-                            </Grid>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ar"
-                                            Storyboard.TargetProperty="RenderTransform.Angle"
-                                            To="180"
-                                            Duration="0:0:.25">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            FillBehavior="Stop"
-                                            Storyboard.TargetName="ar"
-                                            Storyboard.TargetProperty="RenderTransform.Angle"
-                                            To="360"
-                                            Duration="0:0:.25">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <Style TargetType="ComboBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="ui:ComboBoxHelper.UseRewritePopup" Value="True" />
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style>
@@ -101,29 +30,140 @@
                 </Style>
             </Setter.Value>
         </Setter>
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
-                    <Grid>
-                        <Popup
-                            ui:PopupHelper.FixPopup="True"
-                            AllowsTransparency="True"
-                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
-                            Placement="Bottom"
-                            PopupAnimation="Fade"
-                            StaysOpen="True">
-                            <Border
-                                Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
-                                Background="#222222"
-                                BorderBrush="{DynamicResource Awe.UI.DefaultBorderBrush}">
-                                <ItemsPresenter Margin="0,0,0,-4" />
-                            </Border>
-                        </Popup>
-                        <ToggleButton
-                            Focusable="False"
-                            IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
-                            Style="{StaticResource ComboBoxContainer}" />
+                    <Grid x:Name="lkc" Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ui:ComboBoxHelper.MenuHostPopup>
+                            <Grid Margin="0,-1,0,0">
+                                <Grid Margin="-8,0,-8,-8">
+                                    <Border
+                                        x:Name="__popup_shad"
+                                        Margin="10"
+                                        ui:WindowsHelper.LightModeRebind="True"
+                                        Background="#4f111111"
+                                        CornerRadius="4,4,4,4">
+                                        <Border.Effect>
+                                            <BlurEffect Radius="20" />
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+                                <Border
+                                    x:Name="__popup_layout"
+                                    ui:WindowsHelper.LightModeRebind="True"
+                                    Background="#222222"
+                                    BorderBrush="{DynamicResource Awe.UI.DefaultBorderBrush}"
+                                    BorderThickness="1,0,1,1"
+                                    CornerRadius="0,0,4,4">
+                                    <ItemsPresenter Focusable="False" />
+                                </Border>
+                            </Grid>
+
+                        </ui:ComboBoxHelper.MenuHostPopup>
+                        <TextBlock
+                            x:Name="__Header"
+                            Grid.Row="0"
+                            Padding="0,0,0,6"
+                            HorizontalAlignment="Left"
+                            FontSize="14"
+                            Text="{TemplateBinding ui:ControlHelper.Header}"
+                            Visibility="Visible" />
+                        <Grid Grid.Row="1">
+                            <ToggleButton
+                                Grid.Row="1"
+                                ui:WindowsHelper.UseLightMode="{TemplateBinding ui:WindowsHelper.UseLightMode}"
+                                Focusable="False"
+                                IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}">
+                                <ToggleButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource Awe.UI.DefaultBorderBrush}" />
+                                    </Style>
+                                </ToggleButton.Style>
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border
+                                            x:Name="ck"
+                                            Background="Transparent"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="1">
+                                            <Grid Margin="4,4">
+                                                <TextBlock Padding="6,4,4,4" FontSize="13" />
+                                                <Path
+                                                    x:Name="path"
+                                                    Width="10"
+                                                    Height="10"
+                                                    Margin="0,0,6,0"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center"
+                                                    Data="{DynamicResource Awe.UI.Icons.DownArrow}"
+                                                    Fill="{TemplateBinding Foreground}"
+                                                    RenderTransformOrigin=".5,.5"
+                                                    Stretch="Uniform">
+                                                    <Path.RenderTransform>
+                                                        <RotateTransform Angle="0" />
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+
+                                            <Trigger Property="ui:WindowsHelper.UseLightMode" Value="True">
+                                                <Setter Property="BorderBrush" Value="#1f2f2f2f" />
+                                            </Trigger>
+                                            <Trigger Property="ui:WindowsHelper.UseLightMode" Value="False">
+                                                <Setter Property="Foreground" Value="#ffffff" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="ck" Property="CornerRadius" Value="3,3,0,0" />
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="path"
+                                                                Storyboard.TargetProperty="RenderTransform.Angle"
+                                                                To="180"
+                                                                Duration="0:0:.25">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CircleEase EasingMode="EaseOut" />
+                                                                </DoubleAnimation.EasingFunction>
+
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                FillBehavior="Stop"
+                                                                Storyboard.TargetName="path"
+                                                                Storyboard.TargetProperty="RenderTransform.Angle"
+                                                                To="360"
+                                                                Duration="0:0:.15">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CircleEase EasingMode="EaseOut" />
+                                                                </DoubleAnimation.EasingFunction>
+
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter TargetName="ck" Property="CornerRadius" Value="3" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                        </Grid>
                         <ContentPresenter
+                            Grid.Row="1"
                             Margin="10,0,0,0"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="Center"
@@ -134,6 +174,17 @@
                             IsHitTestVisible="false"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ui:ControlHelper.Header" Value="{x:Null}">
+                            <Setter TargetName="__Header" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ui:WindowsHelper.UseLightMode" Value="True">
+                            <Setter TargetName="__popup_layout" Property="Background" Value="White" />
+                            <Setter TargetName="__popup_layout" Property="BorderBrush" Value="#1f2f2f2f" />
+                            <Setter TargetName="__popup_shad" Property="Background" Value="#1f222222" />
+                            <Setter TargetName="__popup_shad" Property="Margin" Value="8,8,8,8" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

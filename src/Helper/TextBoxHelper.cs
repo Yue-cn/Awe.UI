@@ -12,6 +12,7 @@ namespace Awe.UI.Helper
 {
     public class TextBoxHelper
     {
+        #region PasswordBinding
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordBindingProperty =
             DependencyProperty.RegisterAttached("PasswordBinding", typeof(string), typeof(TextBoxHelper), new PropertyMetadata("", OnPasswordBindingChanged));
@@ -32,43 +33,9 @@ namespace Awe.UI.Helper
                 };
             }
         }
+        #endregion
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ContextMenuThemeFixProperty =
-            DependencyProperty.RegisterAttached("ContextMenuThemeFix", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(false, OnContextMenuThemeFixChanged));
-
-        public static string GetContextMenuThemeFix(DependencyObject obj)
-            => (string)obj.GetValue(ContextMenuThemeFixProperty);
-
-        public static void SetContextMenuThemeFix(DependencyObject obj, bool value)
-            => obj.SetValue(ContextMenuThemeFixProperty, value);
-
-        public static void OnContextMenuThemeFixChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is true && d is FrameworkElement cm)
-            {
-                if (Application.Current?.MainWindow is Window wind)
-                {
-                    cm.SetBinding(WindowsHelper.UseLightModeProperty, new Binding
-                    {
-                        Source = wind,
-                        Mode = BindingMode.OneWay,
-                        Path = new PropertyPath(WindowsHelper.UseLightModeProperty)
-                    });
-                    if (cm is ContextMenu)
-                    {
-                        if (!cm.Resources.Contains("ThemeBindingProxy"))
-                        {
-                            cm.Resources.Add("ThemeBindingProxy", new Converter.BindingProxy
-                            {
-                                Data = cm
-                            });
-                        }
-                    }
-                }
-            }
-        }
-
+        #region IntInputOnly
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IntInputOnlyProperty =
             DependencyProperty.RegisterAttached("IntInputOnly", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(false, OnIntInputOnlyChanged));
@@ -165,7 +132,9 @@ namespace Awe.UI.Helper
                 };
             }
         }
+        #endregion
 
+        #region IntInputRewriteBinding
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IntInputRewriteBindingProperty =
             DependencyProperty.RegisterAttached("IntInputRewriteBinding", typeof(int), typeof(TextBoxHelper), new PropertyMetadata(0));
@@ -175,5 +144,6 @@ namespace Awe.UI.Helper
 
         public static void SetIntInputRewriteBinding(DependencyObject obj, int value)
             => obj.SetValue(IntInputRewriteBindingProperty, value);
+        #endregion
     }
 }

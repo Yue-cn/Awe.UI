@@ -12,8 +12,8 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty IconProperty =
          DependencyProperty.RegisterAttached("Icon", typeof(FrameworkElement), typeof(ControlHelper), new PropertyMetadata());
 
-        public static string GetIcon(DependencyObject obj)
-            => (string)obj.GetValue(IconProperty);
+        public static FrameworkElement GetIcon(DependencyObject obj)
+            => (FrameworkElement)obj.GetValue(IconProperty);
 
         public static void SetIcon(DependencyObject obj, FrameworkElement value)
             => obj.SetValue(IconProperty, value);

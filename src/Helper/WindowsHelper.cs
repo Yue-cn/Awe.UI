@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -358,9 +359,47 @@ namespace Awe.UI.Helper
 
         #endregion
 
+        #region LightModeRebind
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LightModeRebindProperty =
+            DependencyProperty.RegisterAttached("LightModeRebind", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnLightModeRebindChanged));
+
+        public static string GetLightModeRebind(DependencyObject obj)
+            => (string)obj.GetValue(LightModeRebindProperty);
+
+        public static void SetLightModeRebind(DependencyObject obj, bool value)
+            => obj.SetValue(LightModeRebindProperty, value);
+
+        public static void OnLightModeRebindChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is true && d is FrameworkElement cm)
+            {
+                if (Application.Current?.MainWindow is Window wind)
+                {
+                    cm.SetBinding(WindowsHelper.UseLightModeProperty, new Binding
+                    {
+                        Source = wind,
+                        Mode = BindingMode.OneWay,
+                        Path = new PropertyPath(WindowsHelper.UseLightModeProperty)
+                    });
+                    if (cm is ContextMenu)
+                    {
+                        if (!cm.Resources.Contains("ThemeBindingProxy"))
+                        {
+                            cm.Resources.Add("ThemeBindingProxy", new Converter.BindingProxy
+                            {
+                                Data = cm
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region MenuHost
 
-        private static Canvas? _displayPlacement;
+        internal static Canvas? MenuDisplayHost;
 
         public static readonly DependencyProperty IsMenuHostProperty =
             DependencyProperty.RegisterAttached("IsMenuHost", typeof(bool), typeof(WindowsHelper), new PropertyMetadata(false, OnIsMenuHostChanged));
@@ -377,106 +416,18 @@ namespace Awe.UI.Helper
             {
                 if (e.NewValue is true)
                 {
-                    _displayPlacement = fe;
-                   
+                    if (MenuDisplayHost is not null)
+                    {
+                        throw new ArgumentException("已有 MenuHost 对象。");
+                    }
+                    MenuDisplayHost = fe;
                 }
                 else
                 {
-                    _displayPlacement = default;
+                    MenuDisplayHost = default;
                 }
             }
         }
-
-        public static void DisplayMenu(FrameworkElement fe)
-        {
-            var va = Mouse.GetPosition(_displayPlacement);
-
-            if (_displayPlacement is not null)
-            {
-                
-
-                _displayPlacement.Children.Clear();
-                var container = new ContentControl()
-                {
-                    Focusable = false,
-                    Content = fe
-                };
-
-                var fiw = va.X;
-                var fih = va.Y;
-
-                if (fe.ActualWidth is 0)
-                {
-                    SizeChangedEventHandler? handle = null;
-                    handle = (object _, SizeChangedEventArgs e) =>
-                    {
-                        if (!e.NewSize.IsEmpty)
-                        {
-                            if (va.X + e.NewSize.Width > _displayPlacement.ActualWidth)
-                            {
-                                fiw = va.X - e.NewSize.Width;
-                            }
-                            if (va.Y + e.NewSize.Width > _displayPlacement.ActualHeight)
-                            {
-                                fih = va.Y - e.NewSize.Height;
-                            }
-
-                            container.SetValue(Canvas.TopProperty, fih);
-                            container.SetValue(Canvas.LeftProperty, fiw);
-                            fe.RemoveHandler(FrameworkElement.SizeChangedEvent, handle);
-                        }
-                    };
-                    fe.SizeChanged += handle;
-                }
-
-                if (va.X + fe.ActualWidth > _displayPlacement.ActualWidth)
-                {
-                    fiw -= fe.ActualWidth;
-                }
-                if (va.Y + fe.ActualHeight > _displayPlacement.ActualHeight)
-                {
-                    fih -= fe.ActualWidth;
-                }
-
-                container.SetValue(Canvas.TopProperty, fih);
-                container.SetValue(Canvas.LeftProperty, fiw);
-
-
-
-
-                container.BeginAnimation(Canvas.OpacityProperty, new DoubleAnimation()
-                {
-                    EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut},
-                    Duration = TimeSpan.FromMilliseconds(250),
-                    To = 1,
-                    From = 0,
-                });
-                _displayPlacement.Children.Add(container);
-                _displayPlacement.Background = new SolidColorBrush()
-                {
-                    Color = Colors.Transparent
-                };
-                _displayPlacement.PreviewMouseDown += async (x, e) =>
-                {
-                    var ve = e.GetPosition(fe);
-                    var pl = e.GetPosition(_displayPlacement);
-                    if (ve.X < 0 || ve.Y < 0 || pl.X > fiw + fe.ActualWidth || pl.Y > fih + fe.ActualHeight)
-                    {
-                        container.IsHitTestVisible = false;
-                        container.BeginAnimation(Canvas.OpacityProperty, new DoubleAnimation()
-                        {
-                            EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut },
-                            Duration = TimeSpan.FromMilliseconds(250),
-                            To = 0,
-                        });
-                        await Task.Delay(250);
-                        _displayPlacement.ClearValue(Canvas.BackgroundProperty);
-                        _displayPlacement.Children.Clear();
-                    }
-                };
-            }
-        }
-
         #endregion
     }
 }

@@ -39,7 +39,7 @@
                 <ContextMenu
                     x:Name="xc"
                     Width="175"
-                    ui:TextBoxHelper.ContextMenuThemeFix="True">
+                    ui:WindowsHelper.LightModeRebind="True">
                     <ContextMenu.Resources>
 
                         <Style x:Key="vk" TargetType="Separator">

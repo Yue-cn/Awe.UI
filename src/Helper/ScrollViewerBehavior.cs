@@ -135,7 +135,7 @@ namespace Awe.UI.Helper
                         if (newOffset == LastVerticalLocation ||
                             double.IsNaN(newOffset))
                         {
-                            e.Handled = true;
+                            // e.Handled = true;
                             return;
                         }
 
@@ -167,7 +167,7 @@ namespace Awe.UI.Helper
                         if (newOffset == LastHorizontalLocation ||
                             double.IsNaN(newOffset))
                         {
-                            e.Handled = true;
+                            // e.Handled = true;
                             return;
                         }
 
