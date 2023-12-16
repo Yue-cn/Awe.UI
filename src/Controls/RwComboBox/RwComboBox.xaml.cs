@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Awe.UI.Controls
 {
@@ -30,6 +31,24 @@ namespace Awe.UI.Controls
                 d.SetValue(IsDropDownOpenProperty, true);
             }
         }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            if (e.Key is Key.Enter or Key.Space)
+            {
+                if (IsDropDownOpen == false)
+                {
+                    IsDropDownOpen = true;
+                }
+                else if (Keyboard.FocusedElement is DependencyObject dp)
+                {
+                    var vi = this.ItemContainerGenerator.ItemFromContainer(dp);
+                }
+            }
+
+            e.Handled = true;
+        }
+        
 
         protected override async void OnDropDownOpened(EventArgs e)
         {

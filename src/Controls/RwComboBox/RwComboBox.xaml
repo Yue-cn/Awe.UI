@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Awe.UI.Controls"
     xmlns:ui="clr-namespace:Awe.UI.Helper">
-    <Style TargetType="local:RwComboBox">
+    <Style x:Key="DefaultRewriteComboBoxStyle" TargetType="local:RwComboBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <!--  已在组件内重写  -->
         <!--<Setter Property="ui:ComboBoxHelper.UseRewritePopup" Value="True" />-->
@@ -81,8 +81,9 @@
                             FontSize="14"
                             Text="{TemplateBinding ui:ControlHelper.Header}"
                             Visibility="Visible" />
-                        <Grid Grid.Row="1">
+                        <Grid x:Name="__Content" Grid.Row="1">
                             <ToggleButton
+                                x:Name="__ContentFe"
                                 Grid.Row="1"
                                 ui:WindowsHelper.UseLightMode="{TemplateBinding ui:WindowsHelper.UseLightMode}"
                                 Focusable="False"
@@ -165,6 +166,9 @@
                                             <Trigger Property="IsChecked" Value="False">
                                                 <Setter TargetName="ck" Property="CornerRadius" Value="3" />
                                             </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="path" Property="Opacity" Value=".3"/>
+                                            </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
@@ -184,6 +188,11 @@
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="1" />
+                            <Setter TargetName="__Header" Property="Opacity" Value="0.4" />
+                            <Setter TargetName="__ContentFe" Property="Opacity" Value="1" />
+                        </Trigger>
                         <Trigger Property="ui:ControlHelper.Header" Value="{x:Null}">
                             <Setter TargetName="__Header" Property="Visibility" Value="Collapsed" />
                         </Trigger>
@@ -198,4 +207,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style BasedOn="{StaticResource DefaultRewriteComboBoxStyle}" TargetType="local:RwComboBox" />
 </ResourceDictionary>

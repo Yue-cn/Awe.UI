@@ -243,8 +243,17 @@ namespace Awe.UI.Helper
         private static TaskCompletionSource<bool>? taskWaiter;
         private static ContentControl? container;
         private static MouseButtonEventHandler eventForHep = new MouseButtonEventHandler(delegate { });
+        private static KeyEventHandler eventForSelect = new KeyEventHandler(delegate { });
         public static async Task WaitForClose(ComboBox cb)
         {
+            //if (taskWaiter is not null)
+            //{
+            //    if (taskWaiter.Task.Status is not TaskStatus.RanToCompletion)
+            //    {
+            //        taskWaiter.SetCanceled();
+            //    }
+            //}
+
             container = new ContentControl() { Focusable = false,Opacity = 0 };
 
             taskWaiter = new TaskCompletionSource<bool>();
@@ -286,11 +295,28 @@ namespace Awe.UI.Helper
                         });
                         cv.PreviewMouseUp -= eventForHep;
 
+                        if (taskWaiter.Task.Status is TaskStatus.RanToCompletion)
+                        {
+                            return;
+                        }
                         taskWaiter.SetResult(true);
                     }
                 });
+                eventForSelect = new KeyEventHandler((_, v) =>
+                {
+                    if (v.Key is Key.Enter or Key.Space && (cb is Awe.UI.Controls.RwComboBox cv ? cv.IsOpened : true))
+                    {
+                        if (Keyboard.FocusedElement is DependencyObject dp)
+                        {
+                            var vi = cb.ItemContainerGenerator.IndexFromContainer(dp);
 
-                
+                            cb.SelectedIndex = vi;
+                        }
+                        cb.PreviewKeyUp -= eventForSelect;
+                    }
+                });
+
+
                 container.SetBinding(ContentControl.WidthProperty, new Binding
                 {
                     Source = cb,
@@ -342,6 +368,7 @@ namespace Awe.UI.Helper
 
                 container.TabIndex = cb.TabIndex + 2;
                 cv.PreviewMouseUp += eventForHep;
+                cv.PreviewKeyUp += eventForSelect;
 
                 container.CaptureMouse();
                 container.ReleaseMouseCapture();

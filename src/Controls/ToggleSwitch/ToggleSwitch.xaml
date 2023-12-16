@@ -27,8 +27,6 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        <Setter Property="Height" Value="20" />
-        <Setter Property="Width" Value="40" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="BorderBrush" Value="{DynamicResource Awe.UI.DefaultBorderBrush}" />
         <Setter Property="Background" Value="Transparent" />
@@ -37,7 +35,29 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:ToggleSwitch">
                     <Grid x:Name="xr">
-                        <Rectangle RadiusX="10" RadiusY="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MaxWidth="40" Width="40" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            x:Name="__Header"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Padding="0,0,0,6"
+                            HorizontalAlignment="Left"
+                            FontSize="14"
+                            Text="{TemplateBinding ui:ControlHelper.Header}"
+                            Visibility="Visible" />
+                        <Rectangle
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            RadiusX="10"
+                            RadiusY="10">
                             <Rectangle.Stroke>
                                 <VisualBrush>
                                     <VisualBrush.Visual>
@@ -67,6 +87,8 @@
                         </Rectangle>
                         <Grid
                             x:Name="SnapKnob"
+                            Grid.Row="1"
+                            Grid.Column="0"
                             Width="20"
                             Height="20"
                             HorizontalAlignment="Left"
@@ -196,7 +218,19 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding (ui:WindowsHelper.UseLightMode), RelativeSource={RelativeSource AncestorType=Window}, Mode=OneWay}" Value="False">
+                            <Setter Property="BorderBrush" Value="#666666" />
+                            <Setter Property="Foreground" Value="#ffffff" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding (ui:WindowsHelper.UseLightMode), RelativeSource={RelativeSource AncestorType=Window}, Mode=OneWay}" Value="True">
+                            <Setter Property="BorderBrush" Value="#979797" />
+                            <Setter Property="Foreground" Value="#000000" />
+                        </DataTrigger>
+                        <Trigger Property="ui:ControlHelper.Header" Value="{x:Null}">
+                            <Setter TargetName="__Header" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

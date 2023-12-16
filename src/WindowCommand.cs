@@ -60,7 +60,21 @@ namespace Awe.UI
             }
         }
 
-
+        private static ResourceDictionary? _preResourceDictionary;
+        public static void ChangeThemePerferences(bool isLight)
+        {
+            if (Application.Current is { } cur)
+            {
+                if (_preResourceDictionary is not null)
+                {
+                    cur.Resources.MergedDictionaries.Remove(_preResourceDictionary);
+                }
+                cur.Resources.MergedDictionaries.Add(_preResourceDictionary = new ResourceDictionary
+                {
+                    Source = new Uri($"pack://application:,,,/Awe.UI;component/ThemeResources/{(isLight ? "Light" : "Dark")}.xaml"),
+                });
+            }
+        }
         public static ICommand CloseWindowCommand = new WindowCommand("close");
         public static ICommand MinimizeWindowCommand = new WindowCommand("minimize");
         public static ICommand MaximizeWindowCommand = new WindowCommand("maximize");

@@ -318,6 +318,10 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
+                            <Setter TargetName="__Header" Property="Opacity" Value=".4" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter TargetName="__Layout" Property="Cursor" Value="IBeam"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

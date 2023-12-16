@@ -66,7 +66,7 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation
+                                        <DoubleAnimation BeginTime="0:0:.35"
                                             EasingFunction="{StaticResource EasingOut}"
                                             Storyboard.TargetProperty="Opacity"
                                             To="1"
@@ -86,7 +86,7 @@
                                                 Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames
-                                            BeginTime="0:0:.5"
+                                            BeginTime="0:0:.55"
                                             RepeatBehavior="Forever"
                                             Storyboard.TargetName="x2"
                                             Storyboard.TargetProperty="RenderTransform.Y">
@@ -100,7 +100,7 @@
                                                 Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames
-                                            BeginTime="0:0:.75"
+                                            BeginTime="0:0:.85"
                                             RepeatBehavior="Forever"
                                             Storyboard.TargetName="x3"
                                             Storyboard.TargetProperty="RenderTransform.Y">
