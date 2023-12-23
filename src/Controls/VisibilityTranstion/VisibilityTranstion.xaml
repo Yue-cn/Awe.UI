@@ -71,6 +71,29 @@
                                         </BooleanAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
+                                <VisualState Name="EnabledNoScale">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.25" />
+
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Visibility"
+                                            Duration="0:0:0">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <BooleanAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="IsHitTestVisible"
+                                            Duration="0:0:.25">
+                                            <DiscreteBooleanKeyFrame KeyTime="0:0:.25" Value="True" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                                 <VisualState Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation
@@ -91,6 +114,28 @@
                                             Storyboard.TargetProperty="ScaleY"
                                             To=".65"
                                             Duration="0:0:.25" />
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Visibility"
+                                            Duration="0:0:.25">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:.25" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <BooleanAnimationUsingKeyFrames
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="IsHitTestVisible"
+                                            Duration="0:0:0">
+                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState Name="DisabledNoScale">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            EasingFunction="{StaticResource EasingFunc}"
+                                            Storyboard.TargetName="layout"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.15" />
                                         <ObjectAnimationUsingKeyFrames
                                             Storyboard.TargetName="layout"
                                             Storyboard.TargetProperty="Visibility"

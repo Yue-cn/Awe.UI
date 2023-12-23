@@ -1,5 +1,41 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="WarningOrErrorBrush">Yellow</SolidColorBrush>
     <SolidColorBrush x:Key="DescriptionForeground">#9F9F9F</SolidColorBrush>
+    <SolidColorBrush x:Key="DescriptionForeground2">#BfBfBf</SolidColorBrush>
+    <SolidColorBrush x:Key="CardBorderBrush">#106f6f6f</SolidColorBrush>
+    <SolidColorBrush x:Key="TagSuccessBackgroundColor">
+        <SolidColorBrush.Color>
+            <Color
+                A="16"
+                B="183"
+                G="226"
+                R="99" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+    <SolidColorBrush x:Key="TagSuccessForegroundColor">#63e2b7</SolidColorBrush>
+    <SolidColorBrush x:Key="TagSuccessBorderoundColor">#63e2b7</SolidColorBrush>
+    <SolidColorBrush x:Key="TagNormalBackoundColor">
+        <SolidColorBrush.Color>
+            <Color
+                A="16"
+                B="232"
+                G="192"
+                R="112" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+    <SolidColorBrush x:Key="TagNormalBorderoundColor">#70c0e8</SolidColorBrush>
+    <SolidColorBrush x:Key="TagNormalForegroundColor">#70c0e8</SolidColorBrush>
+
+    <SolidColorBrush x:Key="TagErrrorBackgroundColor">
+        <SolidColorBrush.Color>
+            <Color
+                A="16"
+                B="128"
+                G="128"
+                R="232" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+    <SolidColorBrush x:Key="TagErrrorBorderoundColor">#e88080</SolidColorBrush>
+    <SolidColorBrush x:Key="TagErrrorForegroundColor">#e88080</SolidColorBrush>
 
 </ResourceDictionary>

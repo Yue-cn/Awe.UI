@@ -242,6 +242,8 @@ namespace Awe.UI.Helper
 
         private static TaskCompletionSource<bool>? taskWaiter;
         private static ContentControl? container;
+        private static SizeChangedEventHandler scevent = new SizeChangedEventHandler(delegate { });
+        private static EventHandler lseFcevent = new EventHandler(delegate { });
         private static MouseButtonEventHandler eventForHep = new MouseButtonEventHandler(delegate { });
         private static KeyEventHandler eventForSelect = new KeyEventHandler(delegate { });
         public static async Task WaitForClose(ComboBox cb)
@@ -315,7 +317,16 @@ namespace Awe.UI.Helper
                         cb.PreviewKeyUp -= eventForSelect;
                     }
                 });
-
+                scevent = new SizeChangedEventHandler(delegate
+                {
+                    Close(cb);
+                    wind!.SizeChanged -= scevent;
+                });
+                lseFcevent = new EventHandler(delegate
+                {
+                    Close(cb);
+                    wind!.Deactivated -= lseFcevent;
+                });
 
                 container.SetBinding(ContentControl.WidthProperty, new Binding
                 {
@@ -369,6 +380,8 @@ namespace Awe.UI.Helper
                 container.TabIndex = cb.TabIndex + 2;
                 cv.PreviewMouseUp += eventForHep;
                 cv.PreviewKeyUp += eventForSelect;
+                wind!.SizeChanged += scevent;
+                wind!.Deactivated += lseFcevent;
 
                 container.CaptureMouse();
                 container.ReleaseMouseCapture();
@@ -383,7 +396,8 @@ namespace Awe.UI.Helper
 
         public static void Close(ComboBox cb)
         {
-            if (taskWaiter is null || container is null) return;
+            if (taskWaiter is null || container is null ||
+                taskWaiter.Task.Status is TaskStatus.RanToCompletion) return;
 
             taskWaiter.SetResult(false);
 

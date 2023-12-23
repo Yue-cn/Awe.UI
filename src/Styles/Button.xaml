@@ -273,7 +273,7 @@
                                             Storyboard.TargetName="hoverBorder"
                                             Storyboard.TargetProperty="Opacity"
                                             To="1"
-                                            Duration="0:0:.25" />
+                                            Duration="0:0:.15" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -300,7 +300,7 @@
                                             Storyboard.TargetName="pressedBorder"
                                             Storyboard.TargetProperty="Opacity"
                                             To="1"
-                                            Duration="0:0:.25" />
+                                            Duration="0:0:.15" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>

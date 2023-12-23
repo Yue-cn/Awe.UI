@@ -22,6 +22,10 @@ namespace Awe.UI.Converter
             {
                 return false;
             }
+            else if (value.ToString().Equals(parameter))
+            {
+                return false;
+            }
             return true;
         }
 

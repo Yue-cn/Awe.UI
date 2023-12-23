@@ -29,6 +29,9 @@
         <ResourceDictionary Source="./Styles/CheckBox.xaml" />
         <ResourceDictionary Source="./Styles/Button.xaml" />
 
+
+        <ResourceDictionary Source="./Styles/ListBox.xaml" />
+        <ResourceDictionary Source="./Styles/ListBoxItem.xaml" />
         <ResourceDictionary Source="./Styles/ComboBox.xaml" />
         <ResourceDictionary Source="./Styles/ComboBoxItem.xaml" />
         <ResourceDictionary Source="./Styles/Menu.xaml" />
@@ -36,6 +39,7 @@
         <ResourceDictionary Source="./Styles/ContextMenu.xaml" />
         <ResourceDictionary Source="./Styles/PasswordBox.xaml" />
 
+        <ResourceDictionary Source="./Controls/Tag/Tag.xaml" />
         <ResourceDictionary Source="./Controls/Loading/Loading.xaml" />
         <ResourceDictionary Source="./Controls/NavigationButton/NavigationButton.xaml" />
         <ResourceDictionary Source="./Controls/ToggleSwitch/ToggleSwitch.xaml" />

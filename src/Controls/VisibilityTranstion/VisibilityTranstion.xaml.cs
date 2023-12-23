@@ -33,6 +33,20 @@ namespace Awe.UI.Controls
             }
         }
 
+
+
+        public bool RequireScale
+        {
+            get { return (bool)GetValue(RequireScaleProperty); }
+            set { SetValue(RequireScaleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for RequireScale.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RequireScaleProperty =
+            DependencyProperty.Register("RequireScale", typeof(bool), typeof(VisibilityTranstion), new PropertyMetadata(false));
+
+
+
         public bool IsDisplay
         {
             get { return (bool)GetValue(IsDisplayProperty); }
@@ -47,7 +61,10 @@ namespace Awe.UI.Controls
         {
             if (d is VisibilityTranstion vt && vt.GetTemplateChild("layout") is FrameworkElement gr)
             {
-                VisualStateManager.GoToElementState(gr, e.NewValue is true ? "Enabled" : "Disabled",false);
+                var val = !(bool)d.GetValue(RequireScaleProperty);
+
+
+                VisualStateManager.GoToElementState(gr, e.NewValue is true ? $"Enabled{(val ? "NoScale" : "")}" : $"Disabled{(val ? "NoScale" : "")}", false);
 
                 if (vt.GetTemplateChild("pl") is TranslateTransform ttf &&
                     vt.GetTemplateChild("cp") is ContentPresenter cp)

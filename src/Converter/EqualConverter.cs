@@ -34,6 +34,13 @@ namespace Awe.UI.Converter
                 }
                 return TrueResult ?? true;
             }
+            else if (value is int val)
+            {
+                if (!val.ToString().Equals(parameter))
+                {
+                    return FalseResult ?? false;
+                }
+            }
             else if (!value.Equals(parameter))
             {
                 return FalseResult ?? false;

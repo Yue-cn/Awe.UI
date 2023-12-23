@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,10 +54,22 @@ namespace Awe.UI.Controls
         protected override async void OnDropDownOpened(EventArgs e)
         {
             IsOpened = true;
+            IsDropDownOpen = true;
             await Awe.UI.Helper.ComboBoxHelper.WaitForClose(this);
+            IsDropDownOpen = false;
             IsOpened = false;
 
-            base.OnDropDownOpened(e);
+            //base.OnDropDownOpened(e);
+        }
+
+        protected override void OnDropDownClosed(EventArgs e)   
+        {
+            if (true)
+            {
+                //Awe.UI.Helper.ComboBoxHelper.Close(this);
+
+                base.OnDropDownClosed(e);
+            }
         }
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)

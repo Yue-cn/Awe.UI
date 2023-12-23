@@ -1,0 +1,50 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Awe.UI.Controls">
+    <Style TargetType="local:Tag">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Tag">
+                    <Border
+                        x:Name="br"
+                        Padding="6,4"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="13">
+                        <ContentPresenter
+                            x:Name="cp"
+                            TextElement.FontSize="11"
+                            TextElement.Foreground="{DynamicResource TagSuccessForegroundColor}"
+                            TextOptions.TextHintingMode="Animated" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="BorderThickness" Value="0">
+                            <Setter TargetName="br" Property="Padding" Value="8,6" />
+                        </Trigger>
+                        <Trigger Property="TagType" Value="Success">
+                            <Setter Property="Foreground" Value="{DynamicResource TagSuccessForegroundColor}" />
+                            <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagSuccessForegroundColor}" />
+                            <Setter TargetName="br" Property="Background" Value="{DynamicResource TagSuccessBackgroundColor}" />
+                            <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagSuccessBorderoundColor}" />
+                        </Trigger>
+                        <Trigger Property="TagType" Value="Normal">
+                            <Setter Property="Foreground" Value="{DynamicResource TagNormalForegroundColor}" />
+                            <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagNormalForegroundColor}" />
+                            <Setter TargetName="br" Property="Background" Value="{DynamicResource TagNormalBackgroundColor}" />
+                            <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagNormalBorderoundColor}" />
+                        </Trigger>
+                        <Trigger Property="TagType" Value="Error">
+                            <Setter Property="Foreground" Value="{DynamicResource TagErrrorForegroundColor}" />
+                            <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagErrrorForegroundColor}" />
+                            <Setter TargetName="br" Property="Background" Value="{DynamicResource TagErrrorBackgroundColor}" />
+                            <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagErrrorBorderoundColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
