@@ -61,6 +61,7 @@
                                     BorderThickness="1,0,1,1"
                                     CornerRadius="0,0,4,4">
                                     <ScrollViewer
+                                        ui:WindowsHelper.LightModeRebind="True"
                                         Focusable="False"
                                         PanningMode="VerticalOnly"
                                         VerticalScrollBarVisibility="Auto">
@@ -167,7 +168,7 @@
                                                 <Setter TargetName="ck" Property="CornerRadius" Value="3" />
                                             </Trigger>
                                             <Trigger Property="IsEnabled" Value="False">
-                                                <Setter TargetName="path" Property="Opacity" Value=".3"/>
+                                                <Setter TargetName="path" Property="Opacity" Value=".3" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>

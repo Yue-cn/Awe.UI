@@ -346,6 +346,8 @@ namespace Awe.UI.Helper
                 container.SetValue(Canvas.LeftProperty, point.X + flw);
                 container.SetValue(Canvas.TopProperty, point.Y + flh);
 
+                container.MaxHeight = wind!.ActualHeight - (point.Y + flh);
+
                 cv.Children.Add(container);
                 cv.Background = new SolidColorBrush { Color = Colors.Transparent };
                 container.BeginAnimation(ContentControl.OpacityProperty, new DoubleAnimation

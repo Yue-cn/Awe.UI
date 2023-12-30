@@ -5,14 +5,15 @@
     <Style TargetType="local:Tag">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="CornerRadius" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Tag">
                     <Border
                         x:Name="br"
-                        Padding="6,4"
+                        Padding="{TemplateBinding Padding}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="13">
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <ContentPresenter
                             x:Name="cp"
                             TextElement.FontSize="11"
@@ -20,9 +21,13 @@
                             TextOptions.TextHintingMode="Animated" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="BorderThickness" Value="0">
-                            <Setter TargetName="br" Property="Padding" Value="8,6" />
-                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="BorderThickness" Value="0" />
+                                <Condition Property="SizeEnum" Value="Normal" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Padding" Value="8,6" />
+                        </MultiTrigger>
                         <Trigger Property="TagType" Value="Success">
                             <Setter Property="Foreground" Value="{DynamicResource TagSuccessForegroundColor}" />
                             <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagSuccessForegroundColor}" />
@@ -36,10 +41,19 @@
                             <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagNormalBorderoundColor}" />
                         </Trigger>
                         <Trigger Property="TagType" Value="Error">
-                            <Setter Property="Foreground" Value="{DynamicResource TagErrrorForegroundColor}" />
-                            <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagErrrorForegroundColor}" />
-                            <Setter TargetName="br" Property="Background" Value="{DynamicResource TagErrrorBackgroundColor}" />
-                            <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagErrrorBorderoundColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TagErrorForegroundColor}" />
+                            <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagErrorForegroundColor}" />
+                            <Setter TargetName="br" Property="Background" Value="{DynamicResource TagErrorBackgroundColor}" />
+                            <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagErrorBorderoundColor}" />
+                        </Trigger>
+                        <Trigger Property="TagType" Value="Warning">
+                            <Setter Property="Foreground" Value="{DynamicResource TagWarningForegroundColor}" />
+                            <Setter TargetName="cp" Property="TextElement.Foreground" Value="{DynamicResource TagWarningForegroundColor}" />
+                            <Setter TargetName="br" Property="Background" Value="{DynamicResource TagWarningBackgroundColor}" />
+                            <Setter TargetName="br" Property="BorderBrush" Value="{DynamicResource TagWarningBorderoundColor}" />
+                        </Trigger>
+                        <Trigger Property="SizeEnum" Value="Tiny">
+                            <Setter Property="Padding" Value="4,1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

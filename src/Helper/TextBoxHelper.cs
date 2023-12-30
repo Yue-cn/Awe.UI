@@ -106,6 +106,10 @@ namespace Awe.UI.Helper
 
                                 }
                             }
+                            else if (va.AddedLength is 0 && va.RemovedLength > 0 && tb.Text.Length is 0)
+                            {
+                                SetIntInputRewriteBinding(tb, -1);
+                            }
                             return;
                         }
                     }
@@ -126,10 +130,16 @@ namespace Awe.UI.Helper
                     {
                         if (ccval != -1)
                         {
-                            tb.Text = ccval.ToString();
+                            //tb.Text = ccval.ToString();
                         }
                     }
                 };
+
+
+                if (tb.Text.Equals("0") || tb.Text.Equals("-1"))
+                {
+                    tb.Clear();
+                }
             }
         }
         #endregion
@@ -139,8 +149,8 @@ namespace Awe.UI.Helper
         public static readonly DependencyProperty IntInputRewriteBindingProperty =
             DependencyProperty.RegisterAttached("IntInputRewriteBinding", typeof(int), typeof(TextBoxHelper), new PropertyMetadata(0));
 
-        public static string GetIntInputRewriteBinding(TextBox obj)
-            => (string)obj.GetValue(IntInputRewriteBindingProperty);
+        public static int GetIntInputRewriteBinding(TextBox obj)
+            => (int)obj.GetValue(IntInputRewriteBindingProperty);
 
         public static void SetIntInputRewriteBinding(TextBox obj, int value)
             => obj.SetValue(IntInputRewriteBindingProperty, value);

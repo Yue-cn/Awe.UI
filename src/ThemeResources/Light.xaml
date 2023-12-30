@@ -27,7 +27,7 @@
     <SolidColorBrush x:Key="TagNormalForegroundColor">#2080f0</SolidColorBrush>
 
 
-    <SolidColorBrush x:Key="TagErrrorBackgroundColor">
+    <SolidColorBrush x:Key="TagErrorBackgroundColor">
         <SolidColorBrush.Color>
             <Color
                 A="20"
@@ -36,6 +36,18 @@
                 R="208" />
         </SolidColorBrush.Color>
     </SolidColorBrush>
-    <SolidColorBrush x:Key="TagErrrorBorderoundColor">#d03050</SolidColorBrush>
-    <SolidColorBrush x:Key="TagErrrorForegroundColor">#d03050</SolidColorBrush>
+    <SolidColorBrush x:Key="TagErrorBorderoundColor">#d03050</SolidColorBrush>
+    <SolidColorBrush x:Key="TagErrorForegroundColor">#d03050</SolidColorBrush>
+    <SolidColorBrush x:Key="TagWarningBackgroundColor">
+        <SolidColorBrush.Color>
+            <Color
+                A="15"
+                B="0"
+                G="32"
+                R="180" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+    <SolidColorBrush x:Key="TagWarningBorderoundColor">#f0a020</SolidColorBrush>
+    <SolidColorBrush x:Key="TagWarningForegroundColor">#f0a020</SolidColorBrush>
+
 </ResourceDictionary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -157,6 +158,7 @@ namespace Awe.UI.Helper
         /// <param name="lParam">The message's lParam value.</param>
         /// <param name="handled">A value that indicates whether the message was handled. Set the value to <see langword="true"/> if the message was handled; otherwise, <see langword="false"/>.</param>
         /// <returns>The appropriate return value depends on the particular message. See the message documentation details for the Win32 message being handled.</returns>
+        [DebuggerNonUserCode]
         private static IntPtr HwndSourceHook(IntPtr hWnd, int uMsg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // TODO: This whole class is one big todo
@@ -374,6 +376,12 @@ namespace Awe.UI.Helper
         {
             if (e.NewValue is true && d is FrameworkElement cm)
             {
+                if (cm is ScrollViewer && DesignerProperties.GetIsInDesignMode(cm))
+                {
+                    cm.SetValue(WindowsHelper.UseLightModeProperty, true);
+
+                    return;
+                }
                 if (Application.Current?.MainWindow is Window wind)
                 {
                     cm.SetBinding(WindowsHelper.UseLightModeProperty, new Binding

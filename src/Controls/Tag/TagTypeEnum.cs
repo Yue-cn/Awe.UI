@@ -10,6 +10,13 @@ namespace Awe.UI.Controls
     {
         Normal,
         Success,
-        Error
+        Error,
+        Warning
+    }
+
+    public enum TagSizeEnum
+    {
+        Normal,
+        Tiny
     }
 }
