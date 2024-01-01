@@ -25,7 +25,7 @@ namespace Awe.UI.Helper
 
         public static void OnPasswordBindingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is true && d is PasswordBox pwd)
+            if (d is PasswordBox pwd)
             {
                 pwd.PasswordChanged += delegate
                 {

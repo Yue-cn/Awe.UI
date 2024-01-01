@@ -61,6 +61,7 @@
                                     BorderThickness="1,0,1,1"
                                     CornerRadius="0,0,4,4">
                                     <ScrollViewer
+                                        ui:ScrollViewerBehavior.UseSmoothScroll="True"
                                         ui:WindowsHelper.LightModeRebind="True"
                                         Focusable="False"
                                         PanningMode="VerticalOnly"
